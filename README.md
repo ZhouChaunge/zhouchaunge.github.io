@@ -1,29 +1,25 @@
-# Zhou Changjian · Academic Homepage
+# Changjian Zhou · Academic Homepage
 
-英文个人学术主页，采用 Minimal Light 风格的简洁双栏及圆润的 Nunito 字体。纯静态网站，无需安装框架或构建依赖。
+英文个人学术主页，采用简洁单页、个人侧栏和圆润的 Nunito 字体。
 
-- 网站地址：https://zhouchaunge.github.io/
-- GitHub 仓库：https://github.com/ZhouChaunge/zhouchaunge.github.io
-- 发布来源：`main` 分支的根目录，GitHub Pages 自动发布每次提交。
+- 主页：https://zhouchaunge.github.io/
+- 仓库：https://github.com/ZhouChaunge/zhouchaunge.github.io
+- 发布来源：main 分支根目录；每次推送后由 GitHub Pages 自动发布。
+- 内容包含简介、研究兴趣、论文、开源软件、教育经历、荣誉与公开联系方式。
 
-## 修改个人资料
+## 修改内容
 
-主要编辑 `content.js`：姓名、身份、所属机构、简介、研究方向、联系方式、学术链接和论文。头像和 CV 文件放在 `assets/` 下，再填入对应相对路径，例如 `./assets/portrait.jpg` 或 `./assets/cv.pdf`。
+1. 编辑 content.js 中的个人资料。普通字符串会自动转义，无需编写 HTML。
+2. 在仓库目录运行 `node build.mjs`，生成完整的 index.html、robots.txt 和 sitemap.xml。
+3. 如果更新了 CV，请同时替换 assets/cv.pdf；PDF 不会随网页构建自动更新。
+4. 将内容文件及生成的页面一起提交到 main。
 
-姓名、所属机构、城市及 GitHub 链接来自用户提供的 GitHub 公开资料。身份、研究方向、论文和联系方式未提供，当前仍是带明确提示的草稿，未编造履历。
-
-## 正式版上线
-
-1. 补齐或删去所有方括号占位内容，上传自己的头像和简历。
-2. 将 `content.js` 中的 `draft` 改为 `false`。
-3. 同步更新 `index.html` 中的简介及静态文字，并删除 `<meta name="robots" content="noindex, nofollow">`。
-4. 提交到 `main`；在 GitHub 仓库的 Actions 中查看发布状态。
-
-草稿的 `noindex` 只向搜索引擎提出不收录请求，不是访问控制；GitHub Pages 网站公开可访问。
+网站使用完整静态 HTML，关闭 JavaScript 也可阅读全部内容。app.js 仅负责导航高亮，不影响正文显示。构建只需要 Node.js，无第三方依赖。
 
 ## 本地预览
 
 ```powershell
+node build.mjs
 python -m http.server 4173 --bind 127.0.0.1
 ```
 
@@ -32,12 +28,23 @@ python -m http.server 4173 --bind 127.0.0.1
 ## 文件结构
 
 ```text
-index.html       页面结构与静态文字
+content.js       个人资料、论文和项目的主数据
+build.mjs        生成静态页面
+index.html       已生成的完整页面
 styles.css       布局与字体
-content.js       个人资料和论文
-app.js           渲染与导航
+app.js           导航高亮
+assets/cv.pdf    公开英文 CV
+assets/portrait.jpg   头像
 assets/fonts/    Nunito 字体与许可证
+robots.txt       搜索引擎抓取配置
+sitemap.xml      站点地图
 .nojekyll        直接发布静态文件
 ```
 
-本项目为原创轻量实现，布局参考 [Minimal Light](https://github.com/yaoyao-liu/minimal-light)，并非其源码 fork。Nunito 来自 [Google Fonts 官方仓库](https://github.com/google/fonts/tree/main/ofl/nunito)，字体许可证保存在 `assets/fonts/OFL.txt`。
+## 信息来源与维护
+
+职业资料参考墨尔本大学官方研究生个人页、本人 ORCID、公开论文出版页和个人简历。论文按正式出版或会议记录列出；尚无完整出版信息的 KAN-GSA 单列为 accepted manuscript，不填未确认的年份、DOI 或合著者名单。新增论文时请核对完整作者顺序和正式链接。
+
+公开 CV 仅包含学术履历和职业联系方式。原始简历及本地个人材料不属于本站文件。
+
+布局参考 [Minimal Light](https://github.com/yaoyao-liu/minimal-light)，为独立轻量实现。Nunito 来自 [Google Fonts 官方仓库](https://github.com/google/fonts/tree/main/ofl/nunito)，字体许可证保存在 assets/fonts/OFL.txt。
