@@ -10,8 +10,8 @@
 ## 修改内容
 
 1. 编辑 content.js 中的个人资料。普通字符串会自动转义，无需编写 HTML。
-2. 在仓库目录运行 `node build.mjs`，生成完整的 index.html、robots.txt 和 sitemap.xml。
-3. 如果更新了 CV，请同时替换 assets/cv.pdf；PDF 不会随网页构建自动更新。
+2. 如果更新了 CV，请先替换 assets/cv.pdf；PDF 不会随网页构建自动更新。
+3. 在仓库目录运行 `node build.mjs`，生成完整的 index.html、robots.txt 和 sitemap.xml，并更新样式、脚本和 CV 的缓存版本。
 4. 将内容文件及生成的页面一起提交到 main。
 
 网站使用完整静态 HTML，关闭 JavaScript 也可阅读全部内容。app.js 仅负责导航高亮，不影响正文显示。构建只需要 Node.js，无第三方依赖。

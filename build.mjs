@@ -1,11 +1,13 @@
 // Generate a complete, searchable page from content.js. No dependencies required.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
+import { createHash } from 'node:crypto';
 
 const root = new URL('./', import.meta.url);
 const context = { window: {} };
 runInNewContext(readFileSync(new URL('content.js', root), 'utf8'), context);
 const p = context.window.ACADEMIC_PROFILE;
+const assetUrl = path => `${path}?v=${createHash('sha256').update(readFileSync(new URL(path, root))).digest('hex').slice(0, 10)}`;
 if (!p?.name || !p?.website) throw new Error('The profile needs a name and website.');
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const href = value => {
@@ -57,9 +59,9 @@ const html = `<!doctype html>
   <meta name="twitter:card" content="summary">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23043361'/%3E%3Ctext x='20' y='27' text-anchor='middle' font-family='sans-serif' font-size='23' fill='white'%3EC%3C/text%3E%3C/svg%3E">
   <link rel="preload" href="./assets/fonts/nunito-regular.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="${assetUrl('./styles.css')}">
   <script type="application/ld+json">${JSON.stringify(structuredData).replace(/</g, '\\u003c')}</script>
-  <script src="./app.js" defer></script>
+  <script src="${assetUrl('./app.js')}" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -74,7 +76,7 @@ const html = `<!doctype html>
         <p class="institution">${link(p.institution, p.links.faculty)}</p>
         <p class="location">${esc(p.location)}</p>
         <div class="profile-links">${link('Email', `mailto:${p.email}`)} ${link('Google Scholar', p.links.scholar)} ${link('ORCID', p.links.orcid)} ${link('GitHub', p.links.github)}</div>
-        ${link('Download CV ↗', p.cv, 'cv-link')}
+        ${link('Download CV ↗', assetUrl(p.cv), 'cv-link')}
       </div>
       <nav class="profile-nav" aria-label="Main navigation">
         ${sections.map(([id, label], i) => `<a class="nav-link${i === 0 ? ' active' : ''}" href="#${id}"${i === 0 ? ' aria-current="location"' : ''}>${label}</a>`).join('\n        ')}
