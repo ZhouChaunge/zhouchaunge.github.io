@@ -21,10 +21,10 @@ const aboutText = text => {
   return text.split(new RegExp(`(${names.join('|')})`, 'g')).map(part => people.has(part) ? link(part, people.get(part)) : esc(part)).join('');
 };
 const linkLabels = { paper: 'Paper', code: 'Code', conference: 'Conference', review: 'OpenReview', simulations: 'Abaqus tools', project: 'Project', data: 'Data' };
-const publication = item => `<article class="publication">
+const publication = (item, level = 3) => `<article class="publication">
   <span class="publication-year">${esc(item.year)}</span>
   <div class="publication-body">
-    <h3>${esc(item.title)}</h3>
+    <h${level}>${esc(item.title)}</h${level}>
     <p class="publication-authors">${authors(item.authors)}</p>
     <p class="publication-venue">${esc(item.venue)}${item.status ? ` <span class="publication-status">${esc(item.status)}</span>` : ''}</p>
     <div class="publication-links">${Object.entries(item.links || {}).map(([key, url]) => link(linkLabels[key] || key, url)).join(' ')}</div>
@@ -73,7 +73,7 @@ const html = `<!doctype html>
         <p class="position">${esc(p.position)}</p>
         <p class="institution">${link(p.institution, p.links.faculty)}</p>
         <p class="location">${esc(p.location)}</p>
-        <div class="profile-links">${link('Email', `mailto:${p.email}`)} ${link('ORCID', p.links.orcid)} ${link('GitHub', p.links.github)}</div>
+        <div class="profile-links">${link('Email', `mailto:${p.email}`)} ${link('Google Scholar', p.links.scholar)} ${link('ORCID', p.links.orcid)} ${link('GitHub', p.links.github)}</div>
         ${link('Download CV ↗', p.cv, 'cv-link')}
       </div>
       <nav class="profile-nav" aria-label="Main navigation">
@@ -90,9 +90,9 @@ const html = `<!doctype html>
         <ul class="research-list">${p.research.map(item => `<li class="research-item"><strong>${esc(item.title)}.</strong> ${esc(item.description)}</li>`).join('\n        ')}</ul>
       </section>
       <section class="section" id="publications" aria-labelledby="publications-heading">
-        <div class="section-title-row"><h2 id="publications-heading">Publications</h2>${link('ORCID ↗', p.links.orcid, 'text-link')}</div>
-        <div class="publication-list">${p.publications.map(publication).join('\n        ')}</div>
-        ${(p.acceptedManuscripts || []).length ? `<div class="accepted-manuscripts"><h3 class="subheading">Accepted manuscript</h3>${p.acceptedManuscripts.map(item => `<article class="accepted-paper"><h4>${esc(item.title)}</h4><p>${esc(item.authorRole)} · <em>${esc(item.venue)}</em> <span class="publication-status">${esc(item.status)}</span></p></article>`).join('')}</div>` : ''}
+        <div class="section-title-row"><h2 id="publications-heading">Publications</h2>${link('Google Scholar ↗', p.links.scholar, 'text-link')}</div>
+        <div class="publication-list">${p.publications.map(item => publication(item)).join('\n        ')}</div>
+        ${(p.preprints || []).length ? `<div class="preprints"><h3 class="subheading">Preprints</h3>${p.preprints.map(item => publication(item, 4)).join('\n        ')}</div>` : ''}
       </section>
       <section class="section" id="software" aria-labelledby="software-heading">
         <h2 id="software-heading">Research Software</h2>
@@ -123,4 +123,4 @@ const html = `<!doctype html>
 writeFileSync(new URL('index.html', root), html.replace(/^[\t ]+$/gm, ''));
 writeFileSync(new URL('robots.txt', root), `User-agent: *\n${p.draft ? 'Disallow: /' : 'Allow: /'}\nSitemap: ${p.website}sitemap.xml\n`);
 writeFileSync(new URL('sitemap.xml', root), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${esc(p.website)}</loc></url></urlset>\n`);
-console.log(`Generated homepage for ${p.name}: ${p.publications.length} publications, ${(p.acceptedManuscripts || []).length} accepted manuscript(s).`);
+console.log(`Generated homepage for ${p.name}: ${p.publications.length} publications, ${(p.preprints || []).length} preprints.`);

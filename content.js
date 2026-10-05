@@ -13,10 +13,10 @@ window.ACADEMIC_PROFILE = {
   "cv": "./assets/cv.pdf",
   "website": "https://zhouchaunge.github.io/",
   "updated": "October 2026",
-  "description": "Changjian Zhou is a Ph.D. student at the University of Melbourne working on scientific machine learning, computational geomechanics, and sim-to-real neural PDE surrogates.",
+  "description": "Changjian Zhou is a Ph.D. student at the University of Melbourne working on scientific machine learning, learned physical simulators, and computational mechanics.",
   "about": [
     "I am a Ph.D. student in the Department of Infrastructure Engineering at the University of Melbourne, working with Negin Yousefpour and Guillermo A. Narsilio in the Geotechnical Engineering research group.",
-    "My research connects scientific machine learning with computational mechanics. I develop methods for adapting neural PDE surrogates to experimental data, identifying constitutive parameters, and quantifying uncertainty in geotechnical systems. I am interested in how physical knowledge can make learned models more reliable outside their training conditions.",
+    "My research connects scientific machine learning with computational mechanics. I develop learned simulators for granular dynamics, methods for adapting neural PDE surrogates to experimental data, and tools for constitutive parameter identification and uncertainty quantification. My broader interests include physical AI and world models grounded in mechanics.",
     "Previously, I was a research assistant at Tsinghua University. I received my M.Eng. from Shanghai Jiao Tong University, advised by Guanlin Ye, and my B.Eng. from Hefei University of Technology."
   ],
   "people": [
@@ -31,26 +31,27 @@ window.ACADEMIC_PROFILE = {
   ],
   "research": [
     {
-      "title": "Scientific machine learning",
-      "description": "Physics-informed learning, neural PDE surrogates, and adaptation from simulation to real measurements."
+      "title": "Physical AI & world models",
+      "description": "Physics-aware learned simulators, contact dynamics, and material-aware models for interaction with the physical world."
     },
     {
-      "title": "Computational geomechanics",
-      "description": "Constitutive modelling, inverse problems, and data-driven identification of soil parameters."
+      "title": "Scientific machine learning",
+      "description": "Physics-informed learning, graph neural simulators, neural PDE surrogates, and sim-to-real adaptation."
+    },
+    {
+      "title": "Computational mechanics",
+      "description": "Granular dynamics, constitutive modelling, inverse problems, and data-driven identification of soil parameters."
     },
     {
       "title": "Uncertainty quantification",
       "description": "Bayesian inference and surrogate models for reliable predictions in offshore and geotechnical engineering."
-    },
-    {
-      "title": "Mechanics-grounded robot learning",
-      "description": "An emerging interest in material-aware terrain simulation and world models for robots operating beyond paved environments."
     }
   ],
   "links": {
     "orcid": "https://orcid.org/0009-0009-8481-4290",
     "github": "https://github.com/ZhouChaunge",
-    "faculty": "https://infrastructure.eng.unimelb.edu.au/people/graduate-researchers/civil-engineering/changjian-zhou"
+    "faculty": "https://infrastructure.eng.unimelb.edu.au/people/graduate-researchers/civil-engineering/changjian-zhou",
+    "scholar": "https://scholar.google.com/citations?user=t6bjRe0AAAAJ&hl=en"
   },
   "publications": [
     {
@@ -96,19 +97,17 @@ window.ACADEMIC_PROFILE = {
       }
     }
   ],
-  "acceptedManuscripts": [
-    {
-      "title": "A KAN-GSA surrogate modelling framework to streamline the calibration of advanced constitutive models: A case study on the Shanghai Model",
-      "authorRole": "First author",
-      "venue": "Engineering Applications of Artificial Intelligence",
-      "status": "Accepted"
-    }
-  ],
   "projects": [
     {
       "title": "PhysGuard",
       "description": "Fisher-guided gradient projection for adapting neural PDE surrogates from simulations to experimental data while preserving learned physical structure.",
       "url": "https://github.com/ZhouChaunge/PhysGuard",
+      "label": "Research code"
+    },
+    {
+      "title": "TRACE",
+      "description": "A graph-network simulator that preserves contact history on edges and uses a physics-structured decoder for granular dynamics.",
+      "url": "https://github.com/Data-Driven-Computational-Geotechnics/TRACE",
       "label": "Research code"
     },
     {
@@ -179,5 +178,39 @@ window.ACADEMIC_PROFILE = {
       "year": "2019"
     }
   ],
-  "contactIntro": "I welcome conversations about scientific machine learning, computational mechanics, and research software. The best way to reach me is by email."
+  "contactIntro": "I welcome conversations about scientific machine learning, computational mechanics, and research software. The best way to reach me is by email.",
+  "preprints": [
+    {
+      "title": "TRACE: A spatiotemporal contact memory graph network simulator for granular dynamics",
+      "authors": "Changjian Zhou, Negin Yousefpour, Jie Qi, Junfeng Fang, Guillermo A. Narsilio, Hans Petter Jostad",
+      "venue": "arXiv:2609.02991",
+      "status": "Preprint",
+      "year": "2026",
+      "links": {
+        "paper": "https://arxiv.org/abs/2609.02991",
+        "code": "https://github.com/Data-Driven-Computational-Geotechnics/TRACE"
+      }
+    },
+    {
+      "title": "StructureClaw: Traceable LLM Agents and an Executable Benchmark for Structural Engineering Workflows",
+      "authors": "Sizhong Qin, Yi Gu, Yao Jiang, Ao Cai, Changjian Zhou, Shaoxuan Shuai, Jiachang Wang, Tianhao Shen, Yueqiang Li, Xinhao Li, Li Zeng, Yueshi Chen, Dachen Gao, Genrong Xu, Wenjie Liao, Xinzheng Lu",
+      "venue": "arXiv:2607.14896",
+      "status": "Preprint",
+      "year": "2026",
+      "links": {
+        "paper": "https://arxiv.org/abs/2607.14896",
+        "code": "https://github.com/structureclaw/structureclaw"
+      }
+    },
+    {
+      "title": "Parameters sensitivity and identification in the Shanghai Model: A numerical analysis for deep excavation",
+      "authors": "Changjian Zhou, Bin Yan, Weidong Wang, Zhonghua Xu, Wenxuan Zhu, Guanlin Ye",
+      "venue": "SSRN 5179194",
+      "status": "Preprint",
+      "year": "2025",
+      "links": {
+        "paper": "https://ssrn.com/abstract=5179194"
+      }
+    }
+  ]
 };

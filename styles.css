@@ -67,17 +67,15 @@ main { min-width: 0; overflow-wrap: break-word; }
 .publication { display: grid; grid-template-columns: 43px minmax(0, 1fr); gap: 16px; padding: 0 0 22px; }
 .publication:last-child { padding-bottom: 0; }
 .publication-year { color: var(--muted); font-size: 14px; line-height: 1.7; }
-.publication h3 { color: var(--ink); font-size: 17px; line-height: 1.5; font-weight: 700; margin-bottom: 5px; }
+.publication h3, .publication h4 { color: var(--ink); font-size: 17px; line-height: 1.5; font-weight: 700; margin: 0 0 5px; }
 .publication-authors { margin-bottom: 3px; }
 .publication-venue { margin-bottom: 3px; font-style: italic; }
 .publication-status { display: inline-block; margin-left: 5px; font-size: 12px; font-style: normal; font-weight: 700; color: var(--accent); white-space: nowrap; }
 .publication-authors { font-size: 15px; }
 .publication-authors strong { font-weight: 700; color: var(--body); }
 .publication-venue { font-size: 15px; }
-.accepted-manuscripts { margin-top: 24px; padding-top: 19px; border-top: 1px solid var(--line); }
+.preprints { margin-top: 24px; padding-top: 19px; border-top: 1px solid var(--line); }
 .subheading { font-size: 17px; font-weight: 700; color: var(--ink); margin: 0 0 11px; }
-.accepted-paper h4 { margin: 0 0 5px; font-size: 16px; font-weight: 600; line-height: 1.6; }
-.accepted-paper p { margin-bottom: 0; font-size: 14px; color: var(--muted); }
 .software-item { margin-bottom: 17px; }
 .software-item h3 { font-size: 17px; line-height: 1.5; margin-bottom: 4px; }
 .software-item p { margin-bottom: 0; }

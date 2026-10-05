@@ -43,7 +43,9 @@ sitemap.xml      站点地图
 
 ## 信息来源与维护
 
-职业资料参考墨尔本大学官方研究生个人页、本人 ORCID、公开论文出版页和个人简历。论文按正式出版或会议记录列出；尚无完整出版信息的 KAN-GSA 单列为 accepted manuscript，不填未确认的年份、DOI 或合著者名单。新增论文时请核对完整作者顺序和正式链接。
+职业资料参考墨尔本大学官方研究生个人页、本人 ORCID 和个人简历。论文清单以本人 Google Scholar 或 ResearchGate 为准，作者顺序和出版状态参考正式出版、会议及预印本记录核对；预印本单独列出。新增论文时请核对完整作者顺序和正式链接。
+
+Google Scholar：https://scholar.google.com/citations?user=t6bjRe0AAAAJ&hl=en
 
 公开 CV 仅包含学术履历和职业联系方式。原始简历及本地个人材料不属于本站文件。
 
