@@ -58,7 +58,11 @@ const sections = [['about', 'About Me'], ['background', 'Education & Work'], ['r
 const experienceTypes = new Set(['Education', 'Research', 'Industry']);
 for (const item of p.experience) {
   if (!experienceTypes.has(item.type)) throw new Error(`Unknown experience type: ${item.institution}`);
+  if (item.logo && (!/^\.\/assets\/institutions\/[a-z0-9-]+\.(svg|png|jpe?g|webp)$/.test(item.logo.src) || !['emblem', 'wordmark', 'wide-canvas'].includes(item.logo.layout || 'emblem'))) {
+    throw new Error(`Invalid institution logo: ${item.institution}`);
+  }
 }
+const experience = item => `<article class="timeline-item"><span class="timeline-years">${esc(item.years)}</span><div class="timeline-content"><div class="timeline-heading">${item.logo ? `<img class="institution-logo is-${esc(item.logo.layout || 'emblem')}" src="${href(assetUrl(item.logo.src))}" alt="" width="52" height="52" loading="lazy" decoding="async">` : ''}<div class="timeline-title"><h3>${esc(item.institution)}</h3><span class="experience-type is-${esc(item.type.toLowerCase())}">${esc(item.type)}</span>${item.employment ? `<span class="experience-type">${esc(item.employment)}</span>` : ''}</div></div><p>${esc(item.role)}</p>${item.detail ? `<p class="timeline-detail">${esc(item.detail)}</p>` : ''}</div></article>`;
 const filters = [{ id: 'all', label: 'All' }, ...topics].map(topic => {
   const count = topic.id === 'all' ? publications.length : publications.filter(item => item.topics.includes(topic.id)).length;
   return `<button type="button" class="publication-filter" data-publication-filter="${esc(topic.id)}" data-publication-label="${esc(topic.label)}" aria-pressed="${topic.id === 'all'}" aria-controls="publication-list">${esc(topic.label)} <span class="filter-count">${count}</span></button>`;
@@ -122,7 +126,7 @@ const html = `<!doctype html>
       </section>
       <section class="section" id="background" aria-labelledby="background-heading">
         <h2 id="background-heading">Education &amp; Experience</h2>
-        <div class="timeline">${p.experience.map(item => `<article class="timeline-item"><span class="timeline-years">${esc(item.years)}</span><div><div class="timeline-title"><h3>${esc(item.institution)}</h3><span class="experience-type is-${esc(item.type.toLowerCase())}">${esc(item.type)}</span>${item.employment ? `<span class="experience-type">${esc(item.employment)}</span>` : ''}</div><p>${esc(item.role)}</p>${item.detail ? `<p class="timeline-detail">${esc(item.detail)}</p>` : ''}</div></article>`).join('\n        ')}</div>
+        <div class="timeline">${p.experience.map(experience).join('\n        ')}</div>
       </section>
       <section class="section" id="research" aria-labelledby="research-heading">
         <h2 id="research-heading">Research Interests</h2>
