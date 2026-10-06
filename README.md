@@ -14,7 +14,7 @@
 3. 在仓库目录运行 `node build.mjs`，生成完整的 index.html、robots.txt 和 sitemap.xml，并更新样式、脚本、头像、论文媒体和 CV 的缓存版本。
 4. 将内容文件及生成的页面一起提交到 main。
 
-网站使用完整静态 HTML，关闭 JavaScript 也可阅读全部内容。app.js 负责导航高亮和论文筛选，collaboration-map.js 负责地图城市选择；构建只需要 Node.js，无第三方依赖。
+网站使用完整静态 HTML，主要学术内容无需 JavaScript 即可阅读。app.js 负责导航高亮和论文筛选，collaboration-map.js 负责地图地点浮层；构建只需要 Node.js，无第三方依赖。
 
 ## 教育、工作与头像
 
@@ -70,9 +70,9 @@ collaborations.home 为当前机构所在地，也可以通过 institutions 列�
 
 每篇 publication 的 authorship 包含 firstAuthors 和 correspondingAuthors，姓名必须与 authors 一致，共同一作或共同通讯填写全部姓名。本人为一作时，地图包含所有其他作者；本人为共同作者时，只包含一作（含共同一作）与通讯作者，按人去重。构建会验证名单、过滤不符合规则的关联，并在缺少必需合作者时中止，避免新增论文后静默漏人。未核实的通讯身份不填写，也不根据末位作者推断。
 
-作者可按论文分别关联不同机构，同一篇论文也可保留多个机构。Research Collaborations 只展示城市、机构和去重后的相关论文链接，不展示姓名或作者身份气泡。作者数据与筛选规则继续用于验证机构选择，详细核对记录保留在维护文档。原始数据由 lib/collaboration-selection.mjs 转换后交给地图渲染器。
+作者可按论文分别关联不同机构，同一篇论文也可保留多个机构。Research Collaborations 默认只展示地图；移到或聚焦地点时浮出城市和机构，手机可点击查看。页面不显示作者姓名、身份气泡或常驻的机构／论文卡片。作者数据与筛选规则继续用于验证机构选择，详细核对记录保留在维护文档。原始数据由 lib/collaboration-selection.mjs 转换后交给地图渲染器。
 
-地图使用本地 Natural Earth 地理数据，无运行时地图 API。城市按钮切换机构、作者和论文信息；关闭 JavaScript 或打印时完整显示所有条目。地图代表共同作者的机构，不表示正式校际合作关系。字段示例和事实依据见 docs/map-sources.md。
+地图使用本地 Natural Earth 地理数据，无运行时地图 API。地图上的地点支持鼠标、键盘和触屏操作；机构信息出现在浮层中，地图下方不再显示城市按钮和详情列表。地图代表共同作者的机构，不表示正式校际合作关系。字段示例和事实依据见 docs/map-sources.md。
 
 ## 本地预览
 

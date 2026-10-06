@@ -1,6 +1,6 @@
 # Collaboration map sources
 
-The Research Collaborations map shows selected **coauthor affiliations**, not formal partnerships between institutions. Its public detail cards display cities, institutions and deduplicated paper links; collaborator names and author-role labels are omitted. Locations are approximate city centers, not street addresses. Every collaborator in the underlying data must have a paper link. Names, roles and evidence are retained below for maintenance and validation. Audit date: 6 October 2026.
+The Research Collaborations map shows selected **coauthor affiliations**, not formal partnerships between institutions. It displays city and institution information on demand in map popovers, with no permanent detail cards below the map. Collaborator names, author-role labels and paper lists are omitted from the map interface. Locations are approximate city centers, not street addresses. Every collaborator in the underlying data must have a paper link. Names, roles and evidence are retained below for maintenance and validation. Audit date: 6 October 2026.
 
 ## Selection and evidence policy
 
@@ -130,12 +130,13 @@ Raw PDFs, rendering screenshots and failed retrieval responses are audit materia
 
 ## Renderer contract
 
-`prepareCollaborationMap(data, publications, ownerName)` from `lib/collaboration-selection.mjs` applies the author-role rule before rendering, deduplicates associations and rejects missing required collaborators. `renderCollaborationMap(collaborations, publications)` from `lib/collaboration-map.mjs` returns an SVG map, native city-selection buttons, and readable detail cards.
+`prepareCollaborationMap(data, publications, ownerName)` from `lib/collaboration-selection.mjs` applies the author-role rule before rendering, deduplicates associations and rejects missing required collaborators. `renderCollaborationMap(collaborations, publications)` from `lib/collaboration-map.mjs` returns an SVG map with accessible location controls and on-demand institution popovers.
 
 - `collaborations.home`: `{ id, city, country, longitude, latitude, institution, institutions }`; its institution list includes collaborators based in the home city.
 - `collaborations.locations`: `[{ id, city, country, longitude, latitude, institutions: [{ name, url?, collaborators: [{ name, paperIds: [] }] }] }]`.
 - Each publication supplies `id`, `title`, its full `authors` string, and `authorship: { firstAuthors: [], correspondingAuthors: [] }`. Paper ids omit the `pub-` anchor prefix. Prepared collaborator records use `papers: [{ id, roles }]`.
 - Location ids must be distinct lowercase slugs. Referenced paper ids must exist. Institution URLs, if supplied, must use HTTPS.
-- An optional location `labelOffset: [x, y]` moves its number label by finite SVG units, while preserving the marker's geographic coordinates. Negative horizontal offsets right-align the label, positive offsets left-align it, and zero centers it. This separates nearby labels in eastern China.
-- The renderer uses prepared collaborator records to collect unique papers per institution, but never includes their names or roles in the map HTML. The publication bibliography remains unchanged.
-- Load `collaboration-map.css` and `collaboration-map.js` once. Without JavaScript every institution and paper link remains visible; the map and markers remain readable. Print also reveals every detail card, even if one city is selected on screen.
+- Visual location labels may be offset to make nearby cities individually selectable, while their geographic dots and connection endpoints keep the original coordinates.
+- At widths up to 540 px, the map focuses on Europe, Asia and Australia to keep the current seven locations readable. Review the narrow viewBox and label positions when adding a city outside this region.
+- Prepared author and paper associations determine eligible institutions, but names, roles and paper lists are not displayed in the map interface. The publication bibliography remains unchanged.
+- Load `collaboration-map.css` and `collaboration-map.js` once. Popovers begin closed and reveal city, country and institution information on hover, keyboard focus or tap. There is no permanent institution list below the map.
