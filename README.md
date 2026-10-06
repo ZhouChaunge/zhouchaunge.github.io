@@ -20,8 +20,6 @@
 
 experience 中每一条记录的 type 填写 Education、Research 或 Industry，显示为轻量气泡；employment 可选，例如 Full-time。日期使用 years 字段，描述使用 role 和 detail。公开职业资料的来源记录在 docs/profile-sources.md。
 
-机构 logo 可通过每条经历的 logo.src 设置，图片保存在 assets/institutions/。默认按原比例完整显示；横向标志使用 layout: "wordmark"，官方清华宽白底原图使用 layout: "wide-canvas" 仅收起两侧空白。图片与相邻机构名称重复，使用空 alt 避免屏幕阅读器重复朗读。来源及墨大保留文字的原因记录在 docs/logo-sources.md。
-
 头像使用 assets/headshot.jpg（用户提供的原图），以较大的圆形显示，保留原图的完整垂直取景，不额外放大人脸；圆形边缘会遮住画面四角。以后替换文件并重新构建即可。
 
 ## 论文分类与标签

@@ -309,7 +309,6 @@ window.ACADEMIC_PROFILE = {
       "type": "Industry",
       "employment": "Full-time",
       "institution": "iFLYTEK Co., Ltd.",
-      "logo": { "src": "./assets/institutions/iflytek.svg", "layout": "wordmark" },
       "role": "Machine Learning Engineer · LLM",
       "detail": "Core Development Platform · Adaptive LLM reasoning with supervised fine-tuning and reinforcement learning."
     },
@@ -318,7 +317,6 @@ window.ACADEMIC_PROFILE = {
       "type": "Research",
       "employment": "Full-time",
       "institution": "Tsinghua University",
-      "logo": { "src": "./assets/institutions/tsinghua.jpg", "layout": "wide-canvas" },
       "role": "Research Assistant",
       "detail": "Computational fluid dynamics of bone cement flow, in collaboration with medical and engineering teams."
     },
@@ -326,7 +324,6 @@ window.ACADEMIC_PROFILE = {
       "years": "2021–2024",
       "type": "Education",
       "institution": "Shanghai Jiao Tong University",
-      "logo": { "src": "./assets/institutions/sjtu.png" },
       "role": "M.Eng. · Civil and Hydraulic Engineering",
       "detail": "Supervisor: Guanlin Ye"
     },
@@ -334,7 +331,6 @@ window.ACADEMIC_PROFILE = {
       "years": "2015–2019",
       "type": "Education",
       "institution": "Hefei University of Technology",
-      "logo": { "src": "./assets/institutions/hfut.jpeg" },
       "role": "B.Eng. · Hydraulic and Hydropower Engineering",
       "detail": ""
     }
