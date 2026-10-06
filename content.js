@@ -255,7 +255,7 @@ window.ACADEMIC_PROFILE = {
     {
       "years": "Sep–Oct 2025",
       "type": "Industry",
-      "employment": "Internship",
+      "employment": "Full-time",
       "institution": "iFLYTEK Co., Ltd.",
       "role": "Machine Learning Engineer · LLM",
       "detail": "Core Development Platform · Adaptive LLM reasoning with supervised fine-tuning and reinforcement learning."
@@ -263,6 +263,7 @@ window.ACADEMIC_PROFILE = {
     {
       "years": "2024–2025",
       "type": "Research",
+      "employment": "Full-time",
       "institution": "Tsinghua University",
       "role": "Research Assistant",
       "detail": "Computational fluid dynamics of bone cement flow, in collaboration with medical and engineering teams."
@@ -273,14 +274,6 @@ window.ACADEMIC_PROFILE = {
       "institution": "Shanghai Jiao Tong University",
       "role": "M.Eng. · Civil and Hydraulic Engineering",
       "detail": "Supervisor: Guanlin Ye"
-    },
-    {
-      "years": "Jul–Dec 2022",
-      "type": "Industry",
-      "employment": "Internship",
-      "institution": "Industrial Securities Co., Ltd.",
-      "role": "Equity Research Analyst",
-      "detail": "Electronics equity research and Python-based data collection."
     },
     {
       "years": "2015–2019",

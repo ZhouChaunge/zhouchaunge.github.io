@@ -8,9 +8,8 @@ Profile: https://www.linkedin.com/in/changjian-zhou-596684295/
 
 Education details: https://www.linkedin.com/in/changjian-zhou-596684295/details/education/
 
-- iFLYTEK Co., Ltd.: Machine Learning Engineer – LLM; internship; September–October 2025; Hefei. Public role description discusses adaptive reasoning, supervised fine-tuning on Qwen2.5, and reinforcement learning for choosing suitable reasoning formats. Homepage uses a concise paraphrase without performance claims.
-- Tsinghua University: Research Assistant; September 2024–May 2025. Work concerned CFD of bone cement flow and collaboration between medicine and engineering.
-- Industrial Securities Co., Ltd.: Equity Research Analyst; internship; July–December 2022. Electronics-sector research and Python-based data collection.
+- iFLYTEK Co., Ltd.: Machine Learning Engineer – LLM; September–October 2025; Hefei. Public role description discusses adaptive reasoning, supervised fine-tuning on Qwen2.5, and reinforcement learning for choosing suitable reasoning formats. Homepage uses a concise paraphrase without performance claims. Employment type is Full-time, as directly corrected by the user on 6 October 2026; this supersedes the LinkedIn label.
+- Tsinghua University: Research Assistant; September 2024–May 2025. Work concerned CFD of bone cement flow and collaboration between medicine and engineering. Full-time employment was directly confirmed by the user on 6 October 2026.
 - University of Melbourne: Ph.D., October 2025–October 2029 (expected). Homepage shows 2025–present and retains the verified current department and supervisors.
 - Shanghai Jiao Tong University: M.Eng., Civil and Hydraulic Engineering, September 2021–June 2024; Guanlin Ye as supervisor.
 - Hefei University of Technology: B.Eng., Hydraulic and Hydropower Engineering, September 2015–July 2019.
