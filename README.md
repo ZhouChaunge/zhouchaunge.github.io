@@ -5,16 +5,22 @@
 - 主页：https://zhouchaunge.github.io/
 - 仓库：https://github.com/ZhouChaunge/zhouchaunge.github.io
 - 发布来源：main 分支根目录；每次推送后由 GitHub Pages 自动发布。
-- 内容包含简介、研究兴趣、论文、开源软件、教育经历、荣誉与公开联系方式。
+- 主区块顺序：About Me → Education & Experience → Research Interests → Publications → Selected Honors → Collaboration Map。开源软件保留在论文区的展开面板中，联系方式位于个人侧栏和页尾。
 
 ## 修改内容
 
 1. 编辑 content.js 中的个人资料。普通字符串会自动转义，无需编写 HTML。
 2. 如果更新了 CV，请先替换 assets/cv.pdf；PDF 不会随网页构建自动更新。
-3. 在仓库目录运行 `node build.mjs`，生成完整的 index.html、robots.txt 和 sitemap.xml，并更新样式、脚本和 CV 的缓存版本。
+3. 在仓库目录运行 `node build.mjs`，生成完整的 index.html、robots.txt 和 sitemap.xml，并更新样式、脚本、头像、论文媒体和 CV 的缓存版本。
 4. 将内容文件及生成的页面一起提交到 main。
 
-网站使用完整静态 HTML，关闭 JavaScript 也可阅读全部内容。app.js 负责导航高亮和论文筛选；构建只需要 Node.js，无第三方依赖。
+网站使用完整静态 HTML，关闭 JavaScript 也可阅读全部内容。app.js 负责导航高亮和论文筛选，collaboration-map.js 负责地图城市选择；构建只需要 Node.js，无第三方依赖。
+
+## 教育、工作与头像
+
+experience 中每一条记录的 type 填写 Education、Research 或 Industry，显示为轻量气泡；employment 可选，例如 Internship。dates 使用 years 字段，描述使用 role 和 detail。公开职业资料的来源记录在 docs/profile-sources.md。
+
+头像使用 assets/headshot.jpg（用户提供的原图），网页通过 CSS 控制圆形裁切，原图不做生成式修改。以后替换文件并重新构建即可。
 
 ## 论文分类与标签
 
@@ -28,7 +34,41 @@
 
 当前七篇论文全部展示。当选中的方向达到十二篇时，默认展示前八篇，提供 Show all / Show fewer。筛选在原列表内进行，不使用内部滚动框。打印时包含全部论文；关闭 JavaScript 时全部内容可直接阅读。
 
-交互检查：运行 `node --test tests/publication-filter.test.mjs`。
+全部交互和渲染检查：运行 `node --test tests/*.test.mjs`。
+
+## 论文图片与视频
+
+每篇论文左侧可以显示图片或视频。把媒体放进 assets/publications/，在对应论文中添加 media。图片会延迟加载；视频带原生播放控件，不自动播放。没有媒体时显示可点击的文字卡片，shortTitle 可设置简短标题。
+
+图片示例：
+
+```js
+media: {
+  type: 'image',
+  src: './assets/publications/example.png',
+  alt: 'A concise description of the research figure'
+}
+```
+
+视频示例（支持 mp4、webm、ogv）：
+
+```js
+media: {
+  type: 'video',
+  src: './assets/publications/example.mp4',
+  poster: './assets/publications/example-poster.png',
+  alt: 'Granular simulation demonstration',
+  caption: 'A short description of the demonstration'
+}
+```
+
+有语音的视频还应设置 `hasSpokenAudio: true`，并添加 `captions: { src: './assets/publications/example.vtt', srclang: 'en', label: 'English' }`。筛选隐藏论文时会暂停视频。已使用图片的来源与许可记录在 docs/media-sources.md。
+
+## 合作地图
+
+collaborations.home 为当前机构所在地；locations 为有论文依据的共同作者机构所在地，使用城市级经纬度。每位 collaborator 的 paperIds 关联现有论文 id。构建会验证所有关联有效。
+
+地图使用本地 Natural Earth 地理数据，无运行时地图 API。城市按钮切换机构、作者和论文信息；关闭 JavaScript 或打印时完整显示所有条目。地图代表共同作者的机构，不表示正式校际合作关系。字段示例和事实依据见 docs/map-sources.md。
 
 ## 本地预览
 
@@ -47,8 +87,12 @@ build.mjs        生成静态页面
 index.html       已生成的完整页面
 styles.css       布局与字体
 app.js           导航高亮、论文筛选与展开
+collaboration-map.css / .js   地图样式与交互
+lib/             论文媒体和合作地图的静态渲染
 assets/cv.pdf    公开英文 CV
-assets/portrait.jpg   头像
+assets/headshot.jpg   用户提供的头像
+assets/publications/  论文图片、视频和来源许可
+assets/map/      本地地图地理数据和来源
 assets/fonts/    Nunito 字体与许可证
 robots.txt       搜索引擎抓取配置
 sitemap.xml      站点地图
@@ -57,7 +101,7 @@ sitemap.xml      站点地图
 
 ## 信息来源与维护
 
-职业资料参考墨尔本大学官方研究生个人页、本人 ORCID 和个人简历。论文清单以本人 Google Scholar 或 ResearchGate 为准，作者顺序和出版状态参考正式出版、会议及预印本记录核对。预印本仅标注条目状态，页面不按发表状态分区。新增论文时请核对完整作者顺序和正式链接。
+职业资料参考本人 LinkedIn、ResearchGate、墨尔本大学官方研究生个人页、本人 ORCID 和个人简历。论文清单以本人 Google Scholar 或 ResearchGate 为准，作者顺序和出版状态参考正式出版、会议及预印本记录核对。预印本仅标注条目状态，页面不按发表状态分区。新增论文时请核对完整作者顺序和正式链接。
 
 Google Scholar：https://scholar.google.com/citations?user=t6bjRe0AAAAJ&hl=en
 

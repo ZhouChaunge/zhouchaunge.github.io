@@ -2,6 +2,8 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
 import { createHash } from 'node:crypto';
+import { renderPublicationMedia } from './lib/publication-media.mjs';
+import { renderCollaborationMap } from './lib/collaboration-map.mjs';
 
 const root = new URL('./', import.meta.url);
 const context = { window: {} };
@@ -42,7 +44,7 @@ const aboutText = text => {
 };
 const linkLabels = { paper: 'Paper', code: 'Code', conference: 'Conference', review: 'OpenReview', simulations: 'Abaqus tools', project: 'Project', data: 'Data' };
 const publication = item => `<article class="publication" id="pub-${esc(item.id)}" data-topics="${esc(item.topics.join(' '))}" aria-labelledby="pub-title-${esc(item.id)}">
-  <span class="publication-year">${esc(item.year)}</span>
+  <div class="publication-preview"><span class="publication-year">${esc(item.year)}</span>${renderPublicationMedia(item, { assetUrl, href, esc })}</div>
   <div class="publication-body">
     <h3 id="pub-title-${esc(item.id)}">${esc(item.title)}</h3>
     <p class="publication-authors">${authors(item.authors)}</p>
@@ -51,7 +53,11 @@ const publication = item => `<article class="publication" id="pub-${esc(item.id)
     <div class="publication-links">${Object.entries(item.links || {}).map(([key, url]) => link(linkLabels[key] || key, url)).join(' ')}</div>
   </div>
 </article>`;
-const sections = [['about', 'About'], ['research', 'Research'], ['publications', 'Publications'], ['software', 'Software'], ['background', 'Background'], ['contact', 'Contact']];
+const sections = [['about', 'About Me'], ['background', 'Education & Work'], ['research', 'Research'], ['publications', 'Publications'], ['honors', 'Honors'], ['collaborations', 'Collaborations']];
+const experienceTypes = new Set(['Education', 'Research', 'Industry']);
+for (const item of p.experience) {
+  if (!experienceTypes.has(item.type)) throw new Error(`Unknown experience type: ${item.institution}`);
+}
 const filters = [{ id: 'all', label: 'All' }, ...topics].map(topic => {
   const count = topic.id === 'all' ? publications.length : publications.filter(item => item.topics.includes(topic.id)).length;
   return `<button type="button" class="publication-filter" data-publication-filter="${esc(topic.id)}" data-publication-label="${esc(topic.label)}" aria-pressed="${topic.id === 'all'}" aria-controls="publication-list">${esc(topic.label)} <span class="filter-count">${count}</span></button>`;
@@ -83,22 +89,24 @@ const html = `<!doctype html>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23043361'/%3E%3Ctext x='20' y='27' text-anchor='middle' font-family='sans-serif' font-size='23' fill='white'%3EC%3C/text%3E%3C/svg%3E">
   <link rel="preload" href="./assets/fonts/nunito-regular.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="${assetUrl('./styles.css')}">
+  <link rel="stylesheet" href="${assetUrl('./collaboration-map.css')}">
   <script type="application/ld+json">${JSON.stringify(structuredData).replace(/</g, '\\u003c')}</script>
   <script src="${assetUrl('./app.js')}" defer></script>
+  <script src="${assetUrl('./collaboration-map.js')}" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   ${p.draft ? '<div class="draft-notice">This homepage is a draft.</div>' : ''}
   <div class="page-layout">
     <aside class="profile" aria-label="Researcher profile">
-      <div class="portrait"><img src="${href(p.photo)}" alt="Portrait of ${esc(p.name)}" width="300" height="300" fetchpriority="high"></div>
+      <div class="portrait"><img src="${href(assetUrl(p.photo))}" alt="${esc(p.name)} beside a mountain lake" width="300" height="300" fetchpriority="high"></div>
       <div class="profile-details">
         <h1>${esc(p.name)}</h1>
         <p class="native-name" lang="zh-Hans">${esc(p.nativeName)}</p>
         <p class="position">${esc(p.position)}</p>
         <p class="institution">${link(p.institution, p.links.faculty)}</p>
         <p class="location">${esc(p.location)}</p>
-        <div class="profile-links">${link('Email', `mailto:${p.email}`)} ${link('Google Scholar', p.links.scholar)} ${link('ORCID', p.links.orcid)} ${link('GitHub', p.links.github)}</div>
+        <div class="profile-links">${link('Email', `mailto:${p.email}`)} ${link('Google Scholar', p.links.scholar)} ${link('ORCID', p.links.orcid)} ${link('GitHub', p.links.github)} ${link('LinkedIn', p.links.linkedin)}</div>
         ${link('Download CV ↗', assetUrl(p.cv), 'cv-link')}
       </div>
       <nav class="profile-nav" aria-label="Main navigation">
@@ -109,6 +117,10 @@ const html = `<!doctype html>
       <section class="about section" id="about" aria-labelledby="about-heading">
         <h2 id="about-heading">About Me</h2>
         <div class="about-copy">${p.about.map(text => `<p>${aboutText(text)}</p>`).join('\n        ')}</div>
+      </section>
+      <section class="section" id="background" aria-labelledby="background-heading">
+        <h2 id="background-heading">Education &amp; Experience</h2>
+        <div class="timeline">${p.experience.map(item => `<article class="timeline-item"><span class="timeline-years">${esc(item.years)}</span><div><div class="timeline-title"><h3>${esc(item.institution)}</h3><span class="experience-type is-${esc(item.type.toLowerCase())}">${esc(item.type)}</span>${item.employment ? `<span class="experience-type">${esc(item.employment)}</span>` : ''}</div><p>${esc(item.role)}</p>${item.detail ? `<p class="timeline-detail">${esc(item.detail)}</p>` : ''}</div></article>`).join('\n        ')}</div>
       </section>
       <section class="section" id="research" aria-labelledby="research-heading">
         <h2 id="research-heading">Research Interests</h2>
@@ -122,27 +134,22 @@ const html = `<!doctype html>
         </div>
         <div class="publication-list" id="publication-list">${publications.map(publication).join('\n        ')}</div>
         <button type="button" class="publication-show-all" id="publication-show-all" aria-controls="publication-list" hidden>Show all publications</button>
+        <details class="research-software" id="software">
+          <summary>Research software &amp; open-source contributions</summary>
+          <div class="software-list">${p.projects.map(item => `<article class="software-item"><h3>${link(item.title, item.url)} <span class="project-label">${esc(item.label)}</span></h3><p>${esc(item.description)}</p></article>`).join('\n          ')}</div>
+          <p class="contributions">I also contribute to ${p.contributions.map(item => `${link(item.name, item.url)} (${esc(item.description)})`).join(' and ')}.</p>
+        </details>
       </section>
-      <section class="section" id="software" aria-labelledby="software-heading">
-        <h2 id="software-heading">Research Software</h2>
-        <div class="software-list">${p.projects.map(item => `<article class="software-item"><h3>${link(item.title, item.url)} <span class="project-label">${esc(item.label)}</span></h3><p>${esc(item.description)}</p></article>`).join('\n        ')}</div>
-        <p class="contributions">I also contribute to ${p.contributions.map(item => `${link(item.name, item.url)} (${esc(item.description)})`).join(' and ')}.</p>
-      </section>
-      <section class="section" id="background" aria-labelledby="background-heading">
-        <h2 id="background-heading">Education &amp; Experience</h2>
-        <div class="timeline">${p.experience.map(item => `<div class="timeline-item"><span class="timeline-years">${esc(item.years)}</span><div><h3>${esc(item.institution)}</h3><p>${esc(item.role)}</p>${item.detail ? `<p class="timeline-detail">${esc(item.detail)}</p>` : ''}</div></div>`).join('\n        ')}</div>
-        <h3 class="subheading awards-heading">Selected Honors</h3>
+      <section class="section" id="honors" aria-labelledby="honors-heading">
+        <h2 id="honors-heading">Selected Honors</h2>
         <ul class="awards-list">${p.awards.map(item => `<li>${esc(item.title)}${item.institution ? `, ${esc(item.institution)}` : ''}${item.year ? ` <span class="award-year">(${esc(item.year)})</span>` : ''}.</li>`).join('\n        ')}</ul>
       </section>
-      <section class="section contact-section" id="contact" aria-labelledby="contact-heading">
-        <h2 id="contact-heading">Contact</h2>
-        <p>${esc(p.contactIntro)}</p>
-        <dl class="contact-details">
-          <div><dt>Email</dt><dd>${link(p.email, `mailto:${p.email}`)}</dd></div>
-          <div><dt>Affiliation</dt><dd>${esc(p.department)}<br>${esc(p.institution)}<br>${esc(p.location)}</dd></div>
-          <div><dt>University</dt><dd>${link('Official researcher profile ↗', p.links.faculty)}</dd></div>
-        </dl>
+      <section class="section" id="collaborations" aria-labelledby="collaborations-heading">
+        <h2 id="collaborations-heading">Collaboration Map</h2>
+        <p class="section-intro">Selected institutions represented in my coauthored research.</p>
+        ${renderCollaborationMap(p.collaborations, publications)}
       </section>
+      <div class="contact-note" id="contact"><p>${esc(p.contactIntro)} ${link('Get in touch ↗', `mailto:${p.email}`)}</p></div>
       <footer class="site-footer"><span>${esc(p.name)} · Updated ${esc(p.updated)}</span><a href="#about">Back to top ↑</a></footer>
     </main>
   </div>

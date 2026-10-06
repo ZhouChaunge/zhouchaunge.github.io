@@ -51,7 +51,15 @@
     const matches = articles.filter(article => selected === 'all' || topics.get(article).includes(selected));
     const canCollapse = matches.length >= threshold;
     const visible = new Set(canCollapse && !expanded ? matches.slice(0, initialCount) : matches);
-    for (const article of articles) article.hidden = !visible.has(article);
+    for (const article of articles) {
+      const hidden = !visible.has(article);
+      if (hidden && !article.hidden) {
+        for (const video of article.querySelectorAll('video')) {
+          if (!video.paused) video.pause();
+        }
+      }
+      article.hidden = hidden;
+    }
     let label = 'Newest first';
     for (const button of filters) {
       const active = button.dataset.publicationFilter === selected;
@@ -91,10 +99,10 @@
     }
   });
 
-  const revealLinkedPublication = () => {
+  const revealLinkedPublication = (hash = window.location.hash) => {
     let id;
     try {
-      id = decodeURIComponent(window.location.hash.slice(1));
+      id = decodeURIComponent(hash.slice(1));
     } catch {
       return;
     }
@@ -108,6 +116,17 @@
 
   render();
   controls.hidden = false;
-  window.addEventListener('hashchange', revealLinkedPublication);
+  window.addEventListener('hashchange', () => revealLinkedPublication());
+  document.addEventListener('click', event => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const anchor = event.target.closest?.('a[href^="#"]');
+    if (!anchor || anchor.hasAttribute('download')) return;
+    const target = anchor.getAttribute('target');
+    if (target && target !== '_self') return;
+    // Clicking the current fragment does not emit hashchange. Reveal its paper
+    // if a filter has since hidden it, while retaining native link navigation.
+    const hash = anchor.getAttribute('href');
+    if (hash === window.location.hash) revealLinkedPublication(hash);
+  });
   revealLinkedPublication();
 })();

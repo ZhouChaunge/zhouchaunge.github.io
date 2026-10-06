@@ -16,6 +16,8 @@ class Element {
   }
   setAttribute(name, value) { this.attributes.set(name, value); }
   getAttribute(name) { return this.attributes.get(name); }
+  hasAttribute(name) { return this.attributes.has(name); }
+  querySelectorAll(selector) { return selector === 'video' ? (this.videos || []) : []; }
   addEventListener(type, handler) { this.listeners.set(type, handler); }
   click() { this.listeners.get('click')?.(); }
   getBoundingClientRect() { return this.bounds; }
@@ -43,12 +45,14 @@ function page(topicLists, { hash = '', threshold = 12, initialCount = 8 } = {}) 
   showAll.hidden = true;
   const elements = new Map([section, controls, list, result, showAll].map(element => [element.id, element]));
   const windowListeners = new Map();
+  const documentListeners = new Map();
   const frames = [];
   const document = {
     querySelectorAll: () => [],
     getElementById: id => elements.get(id),
     documentElement: { scrollHeight: 3000 },
     activeElement: null,
+    addEventListener: (type, listener) => documentListeners.set(type, listener),
   };
   const window = {
     location: { hash }, innerHeight: 900, scrollY: 0,
@@ -68,6 +72,20 @@ function page(topicLists, { hash = '', threshold = 12, initialCount = 8 } = {}) 
     },
     clickMore() { document.activeElement = showAll; showAll.click(); flush(); },
     setHash(value) { window.location.hash = value; windowListeners.get('hashchange')(); flush(); },
+    clickAnchor(href, { target, ...options } = {}) {
+      const anchor = new Element('');
+      anchor.setAttribute('href', href);
+      if (target) anchor.setAttribute('target', target);
+      const event = {
+        button: 0, defaultPrevented: false,
+        target: { closest: () => href.startsWith('#') ? anchor : null },
+        preventDefault() { this.defaultPrevented = true; },
+        ...options,
+      };
+      documentListeners.get('click')(event);
+      flush();
+      return event;
+    },
   };
 }
 
@@ -165,4 +183,68 @@ test('unrelated, missing and malformed anchors do not change the selected view',
     assert.deepEqual(p.visible(), ['pub-1']);
     assert.equal(p.filters[2].getAttribute('aria-pressed'), 'true');
   }
+});
+
+test('clicking an unchanged publication fragment reveals a paper hidden by a later filter', () => {
+  const p = page(['physical-ai', 'engineering'], { hash: '#pub-0' });
+  p.clickFilter('engineering');
+  assert.equal(p.articles[0].hidden, true);
+  const event = p.clickAnchor('#pub-0');
+  assert.equal(p.articles[0].hidden, false);
+  assert.equal(p.filters[0].getAttribute('aria-pressed'), 'true');
+  assert.equal(p.articles[0].scrollCalls.length, 2);
+  assert.equal(p.window.location.hash, '#pub-0');
+  assert.equal(event.defaultPrevented, false, 'native anchor navigation is retained');
+});
+
+test('anchor handling leaves modified clicks and other navigation untouched', () => {
+  const p = page(['physical-ai', 'engineering'], { hash: '#pub-0' });
+  p.clickFilter('engineering');
+  for (const options of [{ ctrlKey: true }, { metaKey: true }, { shiftKey: true }, { altKey: true }, { button: 1 }, { target: '_blank' }, { defaultPrevented: true }]) {
+    p.clickAnchor('#pub-0', options);
+    assert.equal(p.articles[0].hidden, true);
+  }
+  for (const href of ['#research', '#pub-missing', '#%', 'https://example.com/#pub-0']) {
+    const event = p.clickAnchor(href);
+    assert.equal(p.articles[0].hidden, true);
+    assert.equal(event.defaultPrevented, false);
+  }
+});
+
+function playingVideo() {
+  return {
+    paused: false,
+    pauseCalls: 0,
+    pause() { this.paused = true; this.pauseCalls += 1; },
+    play() { throw new Error('Showing a publication must not autoplay its video'); },
+  };
+}
+
+test('filtering pauses videos that become hidden and never resumes them automatically', () => {
+  const p = page(['physical-ai', 'engineering']);
+  const physicalVideo = playingVideo();
+  const engineeringVideo = playingVideo();
+  p.articles[0].videos = [physicalVideo];
+  p.articles[1].videos = [engineeringVideo];
+  p.clickFilter('engineering');
+  assert.equal(physicalVideo.paused, true);
+  assert.equal(physicalVideo.pauseCalls, 1);
+  assert.equal(engineeringVideo.paused, false, 'a video in a visible paper keeps playing');
+  p.clickFilter('all');
+  assert.equal(physicalVideo.paused, true);
+  assert.equal(physicalVideo.pauseCalls, 1);
+});
+
+test('collapsing a long list pauses a playing video in a newly hidden paper', () => {
+  const p = page(Array(12).fill('physical-ai'));
+  p.clickMore();
+  const video = playingVideo();
+  p.articles[11].videos = [video];
+  p.clickMore();
+  assert.equal(p.articles[11].hidden, true);
+  assert.equal(video.pauseCalls, 1);
+  p.clickMore();
+  assert.equal(p.articles[11].hidden, false);
+  assert.equal(video.paused, true);
+  assert.equal(video.pauseCalls, 1);
 });
