@@ -1,6 +1,6 @@
 # Collaboration map sources
 
-The map shows selected **coauthor affiliations**, not formal partnerships between institutions. Locations are approximate city centers, not street addresses. A paper link is required for every named collaborator. Audit date: 6 October 2026.
+The Research Collaborations map shows selected **coauthor affiliations**, not formal partnerships between institutions. Its public detail cards display cities, institutions and deduplicated paper links; collaborator names and author-role labels are omitted. Locations are approximate city centers, not street addresses. Every collaborator in the underlying data must have a paper link. Names, roles and evidence are retained below for maintenance and validation. Audit date: 6 October 2026.
 
 ## Selection and evidence policy
 
@@ -137,4 +137,5 @@ Raw PDFs, rendering screenshots and failed retrieval responses are audit materia
 - Each publication supplies `id`, `title`, its full `authors` string, and `authorship: { firstAuthors: [], correspondingAuthors: [] }`. Paper ids omit the `pub-` anchor prefix. Prepared collaborator records use `papers: [{ id, roles }]`.
 - Location ids must be distinct lowercase slugs. Referenced paper ids must exist. Institution URLs, if supplied, must use HTTPS.
 - An optional location `labelOffset: [x, y]` moves its number label by finite SVG units, while preserving the marker's geographic coordinates. Negative horizontal offsets right-align the label, positive offsets left-align it, and zero centers it. This separates nearby labels in eastern China.
-- Load `collaboration-map.css` and `collaboration-map.js` once. Without JavaScript every affiliation and paper link remains visible; the map and markers remain readable. Print also reveals every detail card, even if one city is selected on screen.
+- The renderer uses prepared collaborator records to collect unique papers per institution, but never includes their names or roles in the map HTML. The publication bibliography remains unchanged.
+- Load `collaboration-map.css` and `collaboration-map.js` once. Without JavaScript every institution and paper link remains visible; the map and markers remain readable. Print also reveals every detail card, even if one city is selected on screen.

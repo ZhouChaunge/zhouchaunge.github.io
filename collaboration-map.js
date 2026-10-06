@@ -13,7 +13,7 @@
       buttons.forEach(button => button.setAttribute('aria-pressed', String(button === selected)));
       details.forEach(detail => { detail.hidden = detail.dataset.collaborationDetail !== id; });
       markers.forEach(marker => marker.classList.toggle('is-selected', marker.dataset.mapLocation === id));
-      if (announce) status.textContent = `Showing coauthor affiliations in ${selected.textContent.trim().replace(/^\d+\s*/, '')}.`;
+      if (announce) status.textContent = `Showing research collaborations in ${selected.textContent.trim().replace(/^\d+\s*/, '')}.`;
     }
 
     buttons.forEach(button => button.addEventListener('click', () => selectLocation(button.dataset.collaborationLocation)));

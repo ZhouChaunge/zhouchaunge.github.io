@@ -5,7 +5,7 @@
 - 主页：https://zhouchaunge.github.io/
 - 仓库：https://github.com/ZhouChaunge/zhouchaunge.github.io
 - 发布来源：main 分支根目录；每次推送后由 GitHub Pages 自动发布。
-- 主区块顺序：About Me → Education & Experience → Research Interests → Publications → Selected Honors → Collaboration Map。开源软件保留在论文区的展开面板中，联系方式位于个人侧栏和页尾。
+- 主区块顺序：About Me → Education & Experience → Research Interests → Publications → Selected Honors → Research Collaborations。开源软件保留在论文区的展开面板中，联系方式位于个人侧栏和页尾。
 
 ## 修改内容
 
@@ -70,7 +70,7 @@ collaborations.home 为当前机构所在地，也可以通过 institutions 列�
 
 每篇 publication 的 authorship 包含 firstAuthors 和 correspondingAuthors，姓名必须与 authors 一致，共同一作或共同通讯填写全部姓名。本人为一作时，地图包含所有其他作者；本人为共同作者时，只包含一作（含共同一作）与通讯作者，按人去重。构建会验证名单、过滤不符合规则的关联，并在缺少必需合作者时中止，避免新增论文后静默漏人。未核实的通讯身份不填写，也不根据末位作者推断。
 
-作者可按论文分别关联不同机构，同一篇论文也可保留多个机构。城市详情按机构、论文及作者排列，作者身份气泡只对应当前论文。原始数据由 lib/collaboration-selection.mjs 转换后交给地图渲染器。
+作者可按论文分别关联不同机构，同一篇论文也可保留多个机构。Research Collaborations 只展示城市、机构和去重后的相关论文链接，不展示姓名或作者身份气泡。作者数据与筛选规则继续用于验证机构选择，详细核对记录保留在维护文档。原始数据由 lib/collaboration-selection.mjs 转换后交给地图渲染器。
 
 地图使用本地 Natural Earth 地理数据，无运行时地图 API。城市按钮切换机构、作者和论文信息；关闭 JavaScript 或打印时完整显示所有条目。地图代表共同作者的机构，不表示正式校际合作关系。字段示例和事实依据见 docs/map-sources.md。
 

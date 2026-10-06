@@ -30,15 +30,18 @@ test('static rendering includes all readable details and valid paper links befor
   assert.doesNotMatch(html, /class="collaboration-detail"[^>]* hidden/);
   assert.match(html, /href="#pub-physguard">PhysGuard<\/a>/);
   assert.match(html, /href="#pub-trace">TRACE<\/a>/);
+  assert.match(html, /National University of Singapore/);
+  assert.match(html, /Norwegian Geotechnical Institute/);
+  assert.doesNotMatch(html, /Junfeng Fang|Hans Petter Jostad|First author|Corresponding author|>Coauthor</);
   assert.match(html, /class="collaboration-land" d="M/);
 });
 
 test('renderer escapes content and rejects unsafe institution URLs and broken paper ids', () => {
   const modified = structuredClone(data);
   modified.locations[0].city = '<Singapore & friends>';
-  modified.locations[0].institutions[0].collaborators[0].name = '"A" <B>';
+  modified.locations[0].institutions[0].name = '"A" <B> Institute';
   assert.match(renderCollaborationMap(modified, publications), /&lt;Singapore &amp; friends&gt;/);
-  assert.match(renderCollaborationMap(modified, publications), /&quot;A&quot; &lt;B&gt;/);
+  assert.match(renderCollaborationMap(modified, publications), /&quot;A&quot; &lt;B&gt; Institute/);
   modified.locations[0].institutions[0].url = 'javascript:alert(1)';
   assert.throws(() => renderCollaborationMap(modified, publications), /HTTPS/);
   modified.locations[0].institutions[0].url = 'https://nus.edu.sg/';
@@ -48,16 +51,17 @@ test('renderer escapes content and rejects unsafe institution URLs and broken pa
   assert.throws(() => renderCollaborationMap(modified, publications), /unique slugs/);
 });
 
-test('coauthors at the same institution share one paper link', () => {
+test('institution paper links remain deduplicated without displaying people or role badges', () => {
   const modified = structuredClone(data);
   modified.locations[0].institutions[0].collaborators.push({ name: 'Another coauthor', papers: [{ id: 'physguard', roles: ['corresponding'] }] });
   const html = renderCollaborationMap(modified, publications);
-  assert.match(html, /collaboration-person">Junfeng Fang/);
-  assert.match(html, /collaboration-person">Another coauthor/);
+  assert.match(html, /href="https:\/\/nus.edu.sg\/">National University of Singapore<\/a>/);
+  assert.doesNotMatch(html, /Junfeng Fang|Another coauthor|Hans Petter Jostad|First author|Corresponding author|>Coauthor</);
+  assert.doesNotMatch(html, /class="collaboration-(?:person|roles|role|contributors)"/);
   assert.equal((html.match(/href="#pub-physguard"/g) || []).length, 1);
 });
 
-test('author roles remain attached to the correct paper and support first plus corresponding', () => {
+test('author roles remain valid input while only related paper links are rendered', () => {
   const modified = structuredClone(data);
   modified.locations = [modified.locations[0]];
   modified.locations[0].institutions[0].collaborators[0].papers = [
@@ -65,12 +69,11 @@ test('author roles remain attached to the correct paper and support first plus c
     { id: 'trace', roles: ['coauthor'] }
   ];
   const html = renderCollaborationMap(modified, publications);
-  const physguard = html.split('<a href="#pub-physguard">')[1].split('</ul></li>')[0];
-  const trace = html.split('<a href="#pub-trace">')[1].split('</ul></li>')[0];
-  assert.match(physguard, />First author<.*>Corresponding author</);
-  assert.doesNotMatch(physguard, />Coauthor</);
-  assert.match(trace, />Coauthor</);
-  assert.doesNotMatch(trace, />First author<|>Corresponding author</);
+  assert.match(html, /href="#pub-physguard">PhysGuard<\/a>/);
+  assert.match(html, /href="#pub-trace">TRACE<\/a>/);
+  assert.match(html, /National University of Singapore/);
+  assert.doesNotMatch(html, /Junfeng Fang|First author|Corresponding author|>Coauthor</);
+  assert.doesNotMatch(html, /class="collaboration-(?:person|roles|role|contributors)"/);
   for (const roles of [[], ['lead'], ['coauthor', 'coauthor'], null]) {
     modified.locations[0].institutions[0].collaborators[0].papers[0].roles = roles;
     assert.throws(() => renderCollaborationMap(modified, publications), /paper roles/);
@@ -88,7 +91,8 @@ test('Melbourne affiliations are selectable without a duplicate marker or self-c
   assert.match(html, /data-collaboration-detail="melbourne"/);
   assert.equal((html.match(/class="collaboration-route"/g) || []).length, data.locations.length);
   assert.doesNotMatch(html, /class="collaboration-route" data-map-location="melbourne"/);
-  assert.match(html, /Negin Yousefpour/);
+  assert.match(html, /id="collaboration-detail-melbourne"[\s\S]*?The University of Melbourne/);
+  assert.doesNotMatch(html, /Negin Yousefpour|First author|Corresponding author|>Coauthor</);
   modified.locations = [];
   const localOnly = renderCollaborationMap(modified, publications);
   assert.match(localOnly, /data-collaboration-detail="melbourne"/);
@@ -127,7 +131,7 @@ test('enhancement selects a city without moving focus or changing the URL', () =
   assert.deepEqual(details.map(detail => detail.hidden), [true, false]);
   assert.equal(buttons[1].attributes['aria-pressed'], 'true');
   assert.equal(markers[1].classList.selected, true);
-  assert.equal(status.textContent, 'Showing coauthor affiliations in Oslo.');
+  assert.equal(status.textContent, 'Showing research collaborations in Oslo.');
   assert.equal(document.activeElement, buttons[1]);
   assert.equal(location.hash, '#collaborations');
 });

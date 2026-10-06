@@ -147,8 +147,8 @@ const html = `<!doctype html>
         <ul class="awards-list">${p.awards.map(item => `<li>${esc(item.title)}${item.institution ? `, ${esc(item.institution)}` : ''}${item.year ? ` <span class="award-year">(${esc(item.year)})</span>` : ''}.</li>`).join('\n        ')}</ul>
       </section>
       <section class="section" id="collaborations" aria-labelledby="collaborations-heading">
-        <h2 id="collaborations-heading">Collaboration Map</h2>
-        <p class="section-intro">For my first-authored papers, all coauthors are included. For other papers, first and corresponding authors are shown, including shared roles.</p>
+        <h2 id="collaborations-heading">Research Collaborations</h2>
+        <p class="section-intro">Institutions represented in my coauthored research.</p>
         ${renderCollaborationMap(collaborationMap, publications)}
       </section>
       <div class="contact-note" id="contact"><p>${esc(p.contactIntro)} ${link('Get in touch ↗', `mailto:${p.email}`)}</p></div>
