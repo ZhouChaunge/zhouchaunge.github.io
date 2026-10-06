@@ -7,8 +7,8 @@ import { projectCoordinate, renderCollaborationMap } from '../lib/collaboration-
 const data = {
   home: { id: 'melbourne', city: 'Melbourne', country: 'Australia', longitude: 144.9631, latitude: -37.8136, institution: 'The University of Melbourne' },
   locations: [
-    { id: 'singapore', city: 'Singapore', country: 'Singapore', longitude: 103.8198, latitude: 1.3521, institutions: [{ name: 'National University of Singapore', url: 'https://nus.edu.sg/', collaborators: [{ name: 'Junfeng Fang', paperIds: ['physguard'] }] }] },
-    { id: 'oslo', city: 'Oslo', country: 'Norway', longitude: 10.7522, latitude: 59.9139, institutions: [{ name: 'Norwegian Geotechnical Institute', collaborators: [{ name: 'Hans Petter Jostad', paperIds: ['trace'] }] }] }
+    { id: 'singapore', city: 'Singapore', country: 'Singapore', longitude: 103.8198, latitude: 1.3521, institutions: [{ name: 'National University of Singapore', url: 'https://nus.edu.sg/', collaborators: [{ name: 'Junfeng Fang', papers: [{ id: 'physguard', roles: ['coauthor'] }] }] }] },
+    { id: 'oslo', city: 'Oslo', country: 'Norway', longitude: 10.7522, latitude: 59.9139, institutions: [{ name: 'Norwegian Geotechnical Institute', collaborators: [{ name: 'Hans Petter Jostad', papers: [{ id: 'trace', roles: ['coauthor'] }] }] }] }
   ]
 };
 const publications = [{ id: 'physguard', title: 'PhysGuard' }, { id: 'trace', title: 'TRACE' }];
@@ -42,7 +42,7 @@ test('renderer escapes content and rejects unsafe institution URLs and broken pa
   modified.locations[0].institutions[0].url = 'javascript:alert(1)';
   assert.throws(() => renderCollaborationMap(modified, publications), /HTTPS/);
   modified.locations[0].institutions[0].url = 'https://nus.edu.sg/';
-  modified.locations[0].institutions[0].collaborators[0].paperIds = ['missing'];
+  modified.locations[0].institutions[0].collaborators[0].papers = [{ id: 'missing', roles: ['coauthor'] }];
   assert.throws(() => renderCollaborationMap(modified, publications), /Unknown collaboration paper/);
   delete modified.home.id;
   assert.throws(() => renderCollaborationMap(modified, publications), /unique slugs/);
@@ -50,10 +50,49 @@ test('renderer escapes content and rejects unsafe institution URLs and broken pa
 
 test('coauthors at the same institution share one paper link', () => {
   const modified = structuredClone(data);
-  modified.locations[0].institutions[0].collaborators.push({ name: 'Another coauthor', paperIds: ['physguard'] });
+  modified.locations[0].institutions[0].collaborators.push({ name: 'Another coauthor', papers: [{ id: 'physguard', roles: ['corresponding'] }] });
   const html = renderCollaborationMap(modified, publications);
-  assert.match(html, /Junfeng Fang, Another coauthor/);
+  assert.match(html, /collaboration-person">Junfeng Fang/);
+  assert.match(html, /collaboration-person">Another coauthor/);
   assert.equal((html.match(/href="#pub-physguard"/g) || []).length, 1);
+});
+
+test('author roles remain attached to the correct paper and support first plus corresponding', () => {
+  const modified = structuredClone(data);
+  modified.locations = [modified.locations[0]];
+  modified.locations[0].institutions[0].collaborators[0].papers = [
+    { id: 'physguard', roles: ['first', 'corresponding'] },
+    { id: 'trace', roles: ['coauthor'] }
+  ];
+  const html = renderCollaborationMap(modified, publications);
+  const physguard = html.split('<a href="#pub-physguard">')[1].split('</ul></li>')[0];
+  const trace = html.split('<a href="#pub-trace">')[1].split('</ul></li>')[0];
+  assert.match(physguard, />First author<.*>Corresponding author</);
+  assert.doesNotMatch(physguard, />Coauthor</);
+  assert.match(trace, />Coauthor</);
+  assert.doesNotMatch(trace, />First author<|>Corresponding author</);
+  for (const roles of [[], ['lead'], ['coauthor', 'coauthor'], null]) {
+    modified.locations[0].institutions[0].collaborators[0].papers[0].roles = roles;
+    assert.throws(() => renderCollaborationMap(modified, publications), /paper roles/);
+  }
+});
+
+test('Melbourne affiliations are selectable without a duplicate marker or self-connection', () => {
+  const modified = structuredClone(data);
+  modified.home.institutions = [{ name: 'The University of Melbourne', collaborators: [{ name: 'Negin Yousefpour', papers: [{ id: 'physguard', roles: ['corresponding'] }] }] }];
+  const html = renderCollaborationMap(modified, publications);
+  assert.equal((html.match(/class="collaboration-home"/g) || []).length, 1);
+  assert.match(html, /class="collaboration-home" data-map-location="melbourne"/);
+  assert.match(html, /data-collaboration-location="melbourne"[^>]*><span[^>]*>1<\/span>Melbourne/);
+  assert.match(html, /data-collaboration-location="singapore"[^>]*><span[^>]*>2<\/span>Singapore/);
+  assert.match(html, /data-collaboration-detail="melbourne"/);
+  assert.equal((html.match(/class="collaboration-route"/g) || []).length, data.locations.length);
+  assert.doesNotMatch(html, /class="collaboration-route" data-map-location="melbourne"/);
+  assert.match(html, /Negin Yousefpour/);
+  modified.locations = [];
+  const localOnly = renderCollaborationMap(modified, publications);
+  assert.match(localOnly, /data-collaboration-detail="melbourne"/);
+  assert.doesNotMatch(localOnly, /class="collaboration-route"|Lines connect/);
 });
 
 test('label offsets move only the label and require two finite coordinates', () => {

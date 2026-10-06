@@ -7,7 +7,7 @@ window.ACADEMIC_PROFILE = {
   "nativeName": "周昌健",
   "position": "Ph.D. Student",
   "institution": "The University of Melbourne",
-  "department": "Department of Infrastructure Engineering",
+  "department": "Faculty of Engineering and Information Technology",
   "location": "Melbourne, Australia",
   "photo": "./assets/headshot.jpg",
   "email": "changjian.zhou@student.unimelb.edu.au",
@@ -16,8 +16,8 @@ window.ACADEMIC_PROFILE = {
   "updated": "October 2026",
   "description": "Changjian Zhou is a Ph.D. student at the University of Melbourne working on scientific machine learning, learned physical simulators, and computational mechanics.",
   "about": [
-    "I am a Ph.D. student in the Department of Infrastructure Engineering at the University of Melbourne, working with Negin Yousefpour and Guillermo A. Narsilio in the Geotechnical Engineering research group.",
-    "My research connects scientific machine learning with computational mechanics. I develop learned simulators for granular dynamics, methods for adapting neural PDE surrogates to experimental data, and tools for constitutive parameter identification and uncertainty quantification. My broader interests include physical AI and world models grounded in mechanics."
+    "I am a Ph.D. student in the Faculty of Engineering and Information Technology at the University of Melbourne.",
+    "My research connects scientific machine learning with computational mechanics. I develop learned simulators for granular dynamics, methods for adapting neural PDE surrogates to experimental data, and tools for constitutive parameter identification. My broader interests include physical AI and world models grounded in mechanics."
   ],
   "people": [
     {
@@ -41,10 +41,6 @@ window.ACADEMIC_PROFILE = {
     {
       "title": "Computational mechanics",
       "description": "Granular dynamics, constitutive modelling, inverse problems, and data-driven identification of soil parameters."
-    },
-    {
-      "title": "Uncertainty quantification",
-      "description": "Bayesian inference and surrogate models for reliable predictions in offshore and geotechnical engineering."
     }
   ],
   "links": {
@@ -80,6 +76,12 @@ window.ACADEMIC_PROFILE = {
         "code": "https://github.com/ZhouChaunge/PhysGuard",
         "conference": "https://neurips.cc/virtual/2026/poster/148249",
         "review": "https://openreview.net/forum?id=zHUiR3DWyZ"
+      },
+      "authorship": {
+        "firstAuthors": [
+          "Changjian Zhou"
+        ],
+        "correspondingAuthors": []
       }
     },
     {
@@ -98,6 +100,14 @@ window.ACADEMIC_PROFILE = {
       "year": "2026",
       "links": {
         "paper": "https://doi.org/10.1016/j.oceaneng.2026.126622"
+      },
+      "authorship": {
+        "firstAuthors": [
+          "Anchen Ni"
+        ],
+        "correspondingAuthors": [
+          "Facheng Wang"
+        ]
       }
     },
     {
@@ -116,6 +126,14 @@ window.ACADEMIC_PROFILE = {
       "year": "2026",
       "links": {
         "paper": "https://doi.org/10.1007/s10706-026-03824-0"
+      },
+      "authorship": {
+        "firstAuthors": [
+          "Negin Yousefpour"
+        ],
+        "correspondingAuthors": [
+          "Negin Yousefpour"
+        ]
       }
     },
     {
@@ -140,6 +158,15 @@ window.ACADEMIC_PROFILE = {
       "links": {
         "paper": "https://arxiv.org/abs/2609.02991",
         "code": "https://github.com/Data-Driven-Computational-Geotechnics/TRACE"
+      },
+      "authorship": {
+        "firstAuthors": [
+          "Changjian Zhou"
+        ],
+        "correspondingAuthors": [
+          "Changjian Zhou",
+          "Negin Yousefpour"
+        ]
       }
     },
     {
@@ -164,6 +191,16 @@ window.ACADEMIC_PROFILE = {
       "links": {
         "paper": "https://arxiv.org/abs/2607.14896",
         "code": "https://github.com/structureclaw/structureclaw"
+      },
+      "authorship": {
+        "firstAuthors": [
+          "Sizhong Qin",
+          "Yi Gu"
+        ],
+        "correspondingAuthors": [
+          "Wenjie Liao",
+          "Xinzheng Lu"
+        ]
       }
     },
     {
@@ -183,6 +220,15 @@ window.ACADEMIC_PROFILE = {
       "year": "2025",
       "links": {
         "paper": "https://ssrn.com/abstract=5179194"
+      },
+      "authorship": {
+        "firstAuthors": [
+          "Changjian Zhou"
+        ],
+        "correspondingAuthors": [
+          "Zhonghua Xu",
+          "Bin Yan"
+        ]
       }
     },
     {
@@ -203,6 +249,12 @@ window.ACADEMIC_PROFILE = {
         "paper": "https://doi.org/10.1016/j.compgeo.2024.106268",
         "code": "https://github.com/ZhouChaunge/UCM-Parameter-by-ML",
         "simulations": "https://github.com/ZhouChaunge/PMT-Traversal-in-Abauqs"
+      },
+      "authorship": {
+        "firstAuthors": [
+          "Changjian Zhou"
+        ],
+        "correspondingAuthors": []
       }
     }
   ],
@@ -249,7 +301,7 @@ window.ACADEMIC_PROFILE = {
       "years": "2025–present",
       "type": "Education",
       "institution": "The University of Melbourne",
-      "role": "Ph.D. Student · Infrastructure Engineering",
+      "role": "Ph.D. Student · Engineering and Information Technology",
       "detail": "Supervisors: Negin Yousefpour and Guillermo A. Narsilio"
     },
     {
@@ -313,43 +365,271 @@ window.ACADEMIC_PROFILE = {
   "contactIntro": "I welcome conversations about scientific machine learning, computational mechanics, and research software. The best way to reach me is by email.",
   "collaborations": {
     "home": {
-      "id": "melbourne", "city": "Melbourne", "country": "Australia",
-      "latitude": -37.8136, "longitude": 144.9631,
-      "institution": "The University of Melbourne"
+      "id": "melbourne",
+      "city": "Melbourne",
+      "country": "Australia",
+      "latitude": -37.8136,
+      "longitude": 144.9631,
+      "institution": "The University of Melbourne",
+      "institutions": [
+        {
+          "name": "The University of Melbourne",
+          "url": "https://www.unimelb.edu.au/",
+          "collaborators": [
+            {
+              "name": "Negin Yousefpour",
+              "paperIds": [
+                "physguard",
+                "trace",
+                "anchor-uncertainty"
+              ]
+            },
+            {
+              "name": "Guillermo A. Narsilio",
+              "paperIds": [
+                "physguard",
+                "trace"
+              ]
+            },
+            {
+              "name": "Jie Qi",
+              "paperIds": [
+                "trace"
+              ]
+            },
+            {
+              "name": "Bin Yan",
+              "paperIds": [
+                "physguard",
+                "shanghai-model"
+              ]
+            }
+          ]
+        }
+      ]
     },
     "locations": [
       {
-        "id": "singapore", "city": "Singapore", "country": "Singapore",
-        "latitude": 1.3521, "longitude": 103.8198,
-        "institutions": [{"name": "National University of Singapore", "url": "https://nus.edu.sg/", "collaborators": [{"name": "Junfeng Fang", "paperIds": ["physguard", "trace"]}]}]
+        "id": "singapore",
+        "city": "Singapore",
+        "country": "Singapore",
+        "latitude": 1.3521,
+        "longitude": 103.8198,
+        "institutions": [
+          {
+            "name": "National University of Singapore",
+            "url": "https://nus.edu.sg/",
+            "collaborators": [
+              {
+                "name": "Junfeng Fang",
+                "paperIds": [
+                  "physguard",
+                  "trace"
+                ]
+              }
+            ]
+          }
+        ]
       },
       {
-        "id": "oslo", "city": "Oslo", "country": "Norway",
-        "latitude": 59.9139, "longitude": 10.7522,
-        "institutions": [{"name": "Norwegian Geotechnical Institute", "url": "https://www.ngi.no/en/", "collaborators": [{"name": "Hans Petter Jostad", "paperIds": ["trace"]}]}]
+        "id": "oslo",
+        "city": "Oslo",
+        "country": "Norway",
+        "latitude": 59.9139,
+        "longitude": 10.7522,
+        "institutions": [
+          {
+            "name": "Norwegian Geotechnical Institute",
+            "url": "https://www.ngi.no/en/",
+            "collaborators": [
+              {
+                "name": "Hans Petter Jostad",
+                "paperIds": [
+                  "trace"
+                ]
+              }
+            ]
+          }
+        ]
       },
       {
-        "id": "bologna", "city": "Bologna", "country": "Italy",
-        "latitude": 44.4949, "longitude": 11.3426,
-        "institutions": [{"name": "University of Bologna", "url": "https://www.unibo.it/en", "collaborators": [{"name": "Alessio Mentani", "paperIds": ["anchor-uncertainty"]}]}]
+        "id": "hefei",
+        "city": "Hefei",
+        "country": "China",
+        "latitude": 31.8206,
+        "longitude": 117.2272,
+        "labelOffset": [
+          -12,
+          4
+        ],
+        "institutions": [
+          {
+            "name": "iFLYTEK",
+            "url": "https://www.iflytek.com/en/",
+            "collaborators": [
+              {
+                "name": "Peng Wu",
+                "paperIds": [
+                  "physguard"
+                ]
+              }
+            ]
+          }
+        ]
       },
       {
-        "id": "hefei", "city": "Hefei", "country": "China",
-        "latitude": 31.8206, "longitude": 117.2272,
-        "labelOffset": [-12, 4],
-        "institutions": [{"name": "iFLYTEK", "url": "https://www.iflytek.com/en/", "collaborators": [{"name": "Peng Wu", "paperIds": ["physguard"]}]}]
+        "id": "beijing",
+        "city": "Beijing",
+        "country": "China",
+        "latitude": 39.9042,
+        "longitude": 116.4074,
+        "labelOffset": [
+          12,
+          -4
+        ],
+        "institutions": [
+          {
+            "name": "Tsinghua University",
+            "url": "https://www.tsinghua.edu.cn/en/",
+            "collaborators": [
+              {
+                "name": "Anchen Ni",
+                "paperIds": [
+                  "guided-waves"
+                ]
+              },
+              {
+                "name": "Facheng Wang",
+                "paperIds": [
+                  "guided-waves"
+                ]
+              },
+              {
+                "name": "Sizhong Qin",
+                "paperIds": [
+                  "structureclaw"
+                ]
+              },
+              {
+                "name": "Yi Gu",
+                "paperIds": [
+                  "structureclaw"
+                ]
+              },
+              {
+                "name": "Xinzheng Lu",
+                "paperIds": [
+                  "structureclaw"
+                ]
+              }
+            ]
+          }
+        ]
       },
       {
-        "id": "beijing", "city": "Beijing", "country": "China",
-        "latitude": 39.9042, "longitude": 116.4074,
-        "labelOffset": [12, -4],
-        "institutions": [{"name": "Tsinghua University", "url": "https://www.tsinghua.edu.cn/en/", "collaborators": [{"name": "Anchen Ni", "paperIds": ["guided-waves"]}, {"name": "Facheng Wang", "paperIds": ["guided-waves"]}]}]
+        "id": "shanghai",
+        "city": "Shanghai",
+        "country": "China",
+        "latitude": 31.2304,
+        "longitude": 121.4737,
+        "labelOffset": [
+          12,
+          7
+        ],
+        "institutions": [
+          {
+            "name": "Shanghai Jiao Tong University",
+            "url": "https://en.sjtu.edu.cn/",
+            "collaborators": [
+              {
+                "name": "Bin Gao",
+                "paperIds": [
+                  "constitutive-identification"
+                ]
+              },
+              {
+                "name": "Bin Yan",
+                "paperIds": [
+                  "shanghai-model",
+                  "constitutive-identification"
+                ]
+              },
+              {
+                "name": "Wenxuan Zhu",
+                "paperIds": [
+                  "shanghai-model",
+                  "constitutive-identification"
+                ]
+              },
+              {
+                "name": "Guanlin Ye",
+                "paperIds": [
+                  "shanghai-model",
+                  "constitutive-identification"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "East China Architecture Design & Research Institute (ECADI)",
+            "collaborators": [
+              {
+                "name": "Weidong Wang",
+                "paperIds": [
+                  "shanghai-model"
+                ]
+              },
+              {
+                "name": "Zhonghua Xu",
+                "paperIds": [
+                  "shanghai-model"
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Shanghai Engineering Research Center of Safety Control for Facilities Adjacent to Deep Excavations",
+            "collaborators": [
+              {
+                "name": "Weidong Wang",
+                "paperIds": [
+                  "shanghai-model"
+                ]
+              },
+              {
+                "name": "Zhonghua Xu",
+                "paperIds": [
+                  "shanghai-model"
+                ]
+              }
+            ]
+          }
+        ]
       },
       {
-        "id": "shanghai", "city": "Shanghai", "country": "China",
-        "latitude": 31.2304, "longitude": 121.4737,
-        "labelOffset": [12, 7],
-        "institutions": [{"name": "Shanghai Jiao Tong University", "url": "https://en.sjtu.edu.cn/", "collaborators": [{"name": "Guanlin Ye", "paperIds": ["shanghai-model", "constitutive-identification"]}]}]
+        "id": "chengdu",
+        "city": "Chengdu",
+        "country": "China",
+        "latitude": 30.5728,
+        "longitude": 104.0668,
+        "labelOffset": [
+          -11,
+          13
+        ],
+        "institutions": [
+          {
+            "name": "Southwest Jiaotong University",
+            "url": "https://faculty.swjtu.edu.cn/liaowj/en/index.htm",
+            "collaborators": [
+              {
+                "name": "Wenjie Liao",
+                "paperIds": [
+                  "structureclaw"
+                ]
+              }
+            ]
+          }
+        ]
       }
     ]
   },

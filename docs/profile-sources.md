@@ -10,7 +10,7 @@ Education details: https://www.linkedin.com/in/changjian-zhou-596684295/details/
 
 - iFLYTEK Co., Ltd.: Machine Learning Engineer – LLM; September–October 2025; Hefei. Public role description discusses adaptive reasoning, supervised fine-tuning on Qwen2.5, and reinforcement learning for choosing suitable reasoning formats. Homepage uses a concise paraphrase without performance claims. Employment type is Full-time, as directly corrected by the user on 6 October 2026; this supersedes the LinkedIn label.
 - Tsinghua University: Research Assistant; September 2024–May 2025. Work concerned CFD of bone cement flow and collaboration between medicine and engineering. Full-time employment was directly confirmed by the user on 6 October 2026.
-- University of Melbourne: Ph.D., October 2025–October 2029 (expected). Homepage shows 2025–present and retains the verified current department and supervisors.
+- University of Melbourne: Ph.D., October 2025–October 2029 (expected). Homepage shows 2025–present. At the user's request, the displayed affiliation is the Faculty of Engineering and Information Technology, and About Me omits supervisor names. The education entry retains the supervisor details.
 - Shanghai Jiao Tong University: M.Eng., Civil and Hydraulic Engineering, September 2021–June 2024; Guanlin Ye as supervisor.
 - Hefei University of Technology: B.Eng., Hydraulic and Hydropower Engineering, September 2015–July 2019.
 - Honors listed in education descriptions: Outstanding Graduate Honor (2024), Yang Yuqiu Scholarship (2023), second prize in the China Postgraduate Mathematical Contest in Modeling (2023), distinguished thesis honor (2019), and second prize in the China Undergraduate Hydraulic Innovation Design Competition (2017).
@@ -27,4 +27,4 @@ Corroborates September–October 2025 at Anhui USTC iFlytek, position Machine Le
 
 https://infrastructure.eng.unimelb.edu.au/people/graduate-researchers/civil-engineering/changjian-zhou
 
-Current department, academic position, and supervisors are retained from the existing verified homepage data. Paper metadata and statuses were not changed by this update. Publication-media and collaboration-map evidence is documented separately.
+Academic position and supervisor details were checked against the existing verified homepage data. The user requested the faculty-level affiliation and three research interests: Physical AI & world models, Scientific machine learning, and Computational mechanics. Uncertainty quantification was removed from the introduction and research-interest list; the related publication remains in the bibliography. Publication-media and collaboration-map evidence is documented separately.

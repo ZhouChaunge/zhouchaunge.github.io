@@ -13,6 +13,8 @@
 .collaboration-home > circle:first-child { fill: #c7dceb; }
 .collaboration-home-dot { fill: #043361; stroke: white; stroke-width: 1.4; }
 .collaboration-home text { fill: #244b68; font: 700 13px var(--sans); paint-order: stroke; stroke: #f4f9fc; stroke-width: 4px; }
+.collaboration-home.is-selected > circle:first-child { fill: #9dc8e1; }
+.collaboration-home.is-selected .collaboration-home-dot { fill: #075685; }
 .collaboration-figure figcaption { margin-top: 7px; color: var(--muted); font-size: 12px; }
 .collaboration-controls { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 15px; }
 .collaboration-location-button { display: inline-flex; align-items: center; gap: 7px; border: 1px solid #d9e2e8; border-radius: 999px; background: #fff; color: #53616c; min-height: 40px; padding: 6px 13px; font: 600 13px/1.5 var(--sans); cursor: pointer; }
@@ -25,11 +27,15 @@
 .collaboration-detail-number { color: #63849a; font-weight: 400; }
 .collaboration-institution + .collaboration-institution { margin-top: 16px; }
 .collaboration-institution-name { font-size: 14px; font-weight: 700; margin: 0 0 5px; }
-.collaboration-papers { list-style: none; padding: 0; margin: 0; }
-.collaboration-person { font-size: 14px; margin: 0; }
-.collaboration-papers { margin-top: 3px; }
-.collaboration-papers li { font-size: 12px; line-height: 1.65; margin-top: 3px; }
+.collaboration-papers, .collaboration-contributors { list-style: none; padding: 0; margin: 0; }
+.collaboration-person { font-size: 13px; margin: 0; }
+.collaboration-paper { font-size: 12px; line-height: 1.65; margin-top: 5px; }
+.collaboration-paper + .collaboration-paper { margin-top: 14px; }
 .collaboration-papers a { color: #42657b; }
+.collaboration-contributors { margin-top: 5px; }
+.collaboration-contributors > li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 9px; margin-top: 5px; }
+.collaboration-roles { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+.collaboration-role { padding: 1px 7px; border-radius: 999px; background: #eaf0f4; color: #526a7a; font-size: 10px; line-height: 1.6; }
 .collaboration-map-credit { font-size: 11px; line-height: 1.6; color: var(--muted); margin: 11px 0 0; }
 .collaboration-selection-status { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 @media (max-width: 760px) {

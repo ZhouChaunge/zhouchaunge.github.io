@@ -66,7 +66,11 @@ media: {
 
 ## 合作地图
 
-collaborations.home 为当前机构所在地；locations 为有论文依据的共同作者机构所在地，使用城市级经纬度。每位 collaborator 的 paperIds 关联现有论文 id。构建会验证所有关联有效。
+collaborations.home 为当前机构所在地，也可以通过 institutions 列出本校合作者；locations 为其他共同作者机构所在地，使用城市级经纬度。每位 collaborator 的 paperIds 关联现有论文 id。
+
+每篇 publication 的 authorship 包含 firstAuthors 和 correspondingAuthors，姓名必须与 authors 一致，共同一作或共同通讯填写全部姓名。本人为一作时，地图包含所有其他作者；本人为共同作者时，只包含一作（含共同一作）与通讯作者，按人去重。构建会验证名单、过滤不符合规则的关联，并在缺少必需合作者时中止，避免新增论文后静默漏人。未核实的通讯身份不填写，也不根据末位作者推断。
+
+作者可按论文分别关联不同机构，同一篇论文也可保留多个机构。城市详情按机构、论文及作者排列，作者身份气泡只对应当前论文。原始数据由 lib/collaboration-selection.mjs 转换后交给地图渲染器。
 
 地图使用本地 Natural Earth 地理数据，无运行时地图 API。城市按钮切换机构、作者和论文信息；关闭 JavaScript 或打印时完整显示所有条目。地图代表共同作者的机构，不表示正式校际合作关系。字段示例和事实依据见 docs/map-sources.md。
 
