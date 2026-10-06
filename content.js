@@ -16,8 +16,7 @@ window.ACADEMIC_PROFILE = {
   "updated": "October 2026",
   "description": "Changjian Zhou is a Ph.D. student at the University of Melbourne working on scientific machine learning, learned physical simulators, and computational mechanics.",
   "about": [
-    "I am a Ph.D. student in the Faculty of Engineering and Information Technology at the University of Melbourne.",
-    "My research connects scientific machine learning with computational mechanics. I develop learned simulators for granular dynamics, methods for adapting neural PDE surrogates to experimental data, and tools for constitutive parameter identification. My broader interests include physical AI and world models grounded in mechanics."
+    "My research interests lie in physical AI, scientific machine learning, and computational mechanics. I aim to build reliable, physics-aware models that learn from simulations and adapt to real-world data."
   ],
   "people": [
     {
@@ -32,15 +31,15 @@ window.ACADEMIC_PROFILE = {
   "research": [
     {
       "title": "Physical AI & world models",
-      "description": "Physics-aware learned simulators, contact dynamics, and material-aware models for interaction with the physical world."
+      "description": "Learned simulators for physical interactions and contact dynamics."
     },
     {
       "title": "Scientific machine learning",
-      "description": "Physics-informed learning, graph neural simulators, neural PDE surrogates, and sim-to-real adaptation."
+      "description": "Physics-informed learning and sim-to-real adaptation."
     },
     {
       "title": "Computational mechanics",
-      "description": "Granular dynamics, constitutive modelling, inverse problems, and data-driven identification of soil parameters."
+      "description": "Granular dynamics, constitutive modelling, and inverse problems."
     }
   ],
   "links": {
@@ -301,7 +300,7 @@ window.ACADEMIC_PROFILE = {
       "years": "2025–present",
       "type": "Education",
       "institution": "The University of Melbourne",
-      "role": "Ph.D. Student · Engineering and Information Technology",
+      "role": "Ph.D. Student · Faculty of Engineering and Information Technology",
       "detail": "Supervisors: Negin Yousefpour and Guillermo A. Narsilio"
     },
     {

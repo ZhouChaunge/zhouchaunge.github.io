@@ -151,6 +151,23 @@ main { min-width: 0; overflow-wrap: break-word; }
   .profile-nav { border: 0; padding: 0; margin-top: 21px; gap: 10px 20px; }
   .section { margin-bottom: 27px; scroll-margin-top: 20px; }
   .section h2 { font-size: 23px; }
+  .about-copy p,
+  .research-item,
+  .timeline-item:has(.is-industry) .timeline-detail,
+  .timeline-item:has(.is-research) .timeline-detail,
+  .software-item p,
+  .contributions,
+  .contact-note p {
+    text-align: justify;
+    text-align-last: start;
+    text-justify: inter-word;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    hyphenate-limit-chars: 7 3 3;
+  }
+  .research-item strong,
+  .contributions a,
+  .contact-note a { -webkit-hyphens: none; hyphens: none; }
   .site-footer { margin-top: 32px; }
   .publication { grid-template-columns: 136px minmax(0, 1fr); gap: 18px; }
   .publication-filter { min-height: 42px; padding: 7px 12px; }
