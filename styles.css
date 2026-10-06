@@ -26,6 +26,7 @@ body { margin: 0; background: #fff; color: var(--body); font-family: var(--sans)
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; text-underline-offset: 3px; }
 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 [hidden] { display: none !important; }
 ::selection { background: #dcebf4; }
 h1, h2, h3, p { margin-top: 0; }
@@ -64,7 +65,7 @@ main { min-width: 0; overflow-wrap: break-word; }
 .section-title-row { display: flex; align-items: baseline; justify-content: space-between; gap: 15px; }
 .text-link { font-size: 14px; white-space: nowrap; }
 .empty-publications { font-size: 16px; color: var(--muted); font-style: italic; margin-bottom: 0; }
-.publication { display: grid; grid-template-columns: 43px minmax(0, 1fr); gap: 16px; padding: 0 0 22px; }
+.publication { display: grid; grid-template-columns: 43px minmax(0, 1fr); gap: 16px; padding: 0 0 28px; scroll-margin-top: 28px; }
 .publication:last-child { padding-bottom: 0; }
 .publication-year { color: var(--muted); font-size: 14px; line-height: 1.7; }
 .publication h3, .publication h4 { color: var(--ink); font-size: 17px; line-height: 1.5; font-weight: 700; margin: 0 0 5px; }
@@ -74,7 +75,18 @@ main { min-width: 0; overflow-wrap: break-word; }
 .publication-authors { font-size: 15px; }
 .publication-authors strong { font-weight: 700; color: var(--body); }
 .publication-venue { font-size: 15px; }
-.preprints { margin-top: 24px; padding-top: 19px; border-top: 1px solid var(--line); }
+.publication-status.is-preprint { color: var(--muted); font-weight: 600; }
+.publication-controls { margin: 3px 0 23px; }
+.publication-filters { display: flex; flex-wrap: wrap; gap: 9px; }
+.publication-filter { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 38px; padding: 6px 14px; border: 1px solid #d9e2e8; border-radius: 999px; background: #fff; color: #53616c; font: 600 13px/1.5 var(--sans); cursor: pointer; }
+.publication-filter:hover { background: #f4f8fb; border-color: #b4c9d8; }
+.publication-filter[aria-pressed="true"] { background: #edf5fa; border-color: #a8c7dc; color: var(--ink); }
+.filter-count { font-size: 12px; color: #637787; font-weight: 500; }
+.publication-result-count { color: var(--muted); font-size: 12px; margin: 10px 0 0; }
+.publication-tags { display: flex; flex-wrap: wrap; gap: 5px 7px; list-style: none; padding: 0; margin: 9px 0 0; }
+.publication-tags li { border-radius: 999px; background: #f2f5f7; color: #526572; padding: 2px 9px; font-size: 12px; line-height: 1.6; }
+.publication-show-all { display: block; margin: 4px auto 0; padding: 8px 18px; border: 1px solid #c5d5e0; border-radius: 999px; background: #fff; color: var(--accent); font: 600 14px/1.5 var(--sans); cursor: pointer; }
+.publication-show-all:hover { background: #f2f7fa; }
 .subheading { font-size: 17px; font-weight: 700; color: var(--ink); margin: 0 0 11px; }
 .software-item { margin-bottom: 17px; }
 .software-item h3 { font-size: 17px; line-height: 1.5; margin-bottom: 4px; }
@@ -116,6 +128,8 @@ main { min-width: 0; overflow-wrap: break-word; }
   .section h2 { font-size: 23px; }
   .site-footer { margin-top: 32px; }
   .publication { grid-template-columns: 36px minmax(0, 1fr); gap: 12px; }
+  .publication-filter { min-height: 42px; padding: 7px 12px; }
+  .publication-filters { gap: 8px; }
   .timeline-item { grid-template-columns: 92px minmax(0, 1fr); gap: 12px; }
   .contact-details > div { grid-template-columns: 1fr; gap: 2px; margin-bottom: 13px; }
   .project-label { display: block; margin-left: 0; margin-top: 2px; }
@@ -130,10 +144,12 @@ main { min-width: 0; overflow-wrap: break-word; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 @media print {
-  .draft-notice, .profile-nav, .site-footer, .skip-link { display: none; }
+  .draft-notice, .profile-nav, .site-footer, .skip-link, .publication-controls, .publication-show-all { display: none !important; }
   .page-layout { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 35px; margin: 0; }
   .profile { position: static; }
   .section, .publication { break-inside: avoid; }
+  #publications { break-inside: auto; }
+  .publication[hidden] { display: grid !important; }
   body { font-size: 11pt; }
   a { color: inherit; }
 }

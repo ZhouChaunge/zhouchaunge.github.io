@@ -9,6 +9,24 @@ runInNewContext(readFileSync(new URL('content.js', root), 'utf8'), context);
 const p = context.window.ACADEMIC_PROFILE;
 const assetUrl = path => `${path}?v=${createHash('sha256').update(readFileSync(new URL(path, root))).digest('hex').slice(0, 10)}`;
 if (!p?.name || !p?.website) throw new Error('The profile needs a name and website.');
+const topics = p.publicationTopics || [];
+const topicIds = new Set(topics.map(topic => topic.id));
+const paperIds = new Set();
+if (topicIds.size !== topics.length || topics.some(topic => !/^[a-z][a-z0-9-]*$/.test(topic.id) || topic.id === 'all' || !topic.label)) {
+  throw new Error('Publication topics need unique ids and labels.');
+}
+const publications = [...(p.publications || [])].sort((a, b) => Number(b.year) - Number(a.year));
+for (const item of publications) {
+  if (!/^[a-z][a-z0-9-]*$/.test(item.id) || paperIds.has(item.id)) throw new Error(`Invalid or repeated publication id: ${item.id}`);
+  if (!/^\d{4}$/.test(String(item.year))) throw new Error(`Invalid publication year: ${item.title}`);
+  if (!Array.isArray(item.topics) || !item.topics.length || item.topics.some(topic => !topicIds.has(topic))) {
+    throw new Error(`Unknown or missing topic for: ${item.title}`);
+  }
+  if (!Array.isArray(item.tags) || item.tags.length < 1 || item.tags.length > 2 || item.tags.some(tag => typeof tag !== 'string' || !tag.trim())) {
+    throw new Error(`Add one or two descriptive tags to: ${item.title}`);
+  }
+  paperIds.add(item.id);
+}
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const href = value => {
   const url = new URL(value, p.website);
@@ -23,16 +41,21 @@ const aboutText = text => {
   return text.split(new RegExp(`(${names.join('|')})`, 'g')).map(part => people.has(part) ? link(part, people.get(part)) : esc(part)).join('');
 };
 const linkLabels = { paper: 'Paper', code: 'Code', conference: 'Conference', review: 'OpenReview', simulations: 'Abaqus tools', project: 'Project', data: 'Data' };
-const publication = (item, level = 3) => `<article class="publication">
+const publication = item => `<article class="publication" id="pub-${esc(item.id)}" data-topics="${esc(item.topics.join(' '))}" aria-labelledby="pub-title-${esc(item.id)}">
   <span class="publication-year">${esc(item.year)}</span>
   <div class="publication-body">
-    <h${level}>${esc(item.title)}</h${level}>
+    <h3 id="pub-title-${esc(item.id)}">${esc(item.title)}</h3>
     <p class="publication-authors">${authors(item.authors)}</p>
-    <p class="publication-venue">${esc(item.venue)}${item.status ? ` <span class="publication-status">${esc(item.status)}</span>` : ''}</p>
+    <p class="publication-venue">${esc(item.venue)}${item.status ? ` <span class="publication-status${item.status === 'Preprint' ? ' is-preprint' : ''}">${esc(item.status)}</span>` : ''}</p>
+    <ul class="publication-tags" aria-label="Paper topics">${item.tags.map(tag => `<li>${esc(tag)}</li>`).join(' ')}</ul>
     <div class="publication-links">${Object.entries(item.links || {}).map(([key, url]) => link(linkLabels[key] || key, url)).join(' ')}</div>
   </div>
 </article>`;
 const sections = [['about', 'About'], ['research', 'Research'], ['publications', 'Publications'], ['software', 'Software'], ['background', 'Background'], ['contact', 'Contact']];
+const filters = [{ id: 'all', label: 'All' }, ...topics].map(topic => {
+  const count = topic.id === 'all' ? publications.length : publications.filter(item => item.topics.includes(topic.id)).length;
+  return `<button type="button" class="publication-filter" data-publication-filter="${esc(topic.id)}" data-publication-label="${esc(topic.label)}" aria-pressed="${topic.id === 'all'}" aria-controls="publication-list">${esc(topic.label)} <span class="filter-count">${count}</span></button>`;
+}).join('\n          ');
 const structuredData = {
   '@context': 'https://schema.org', '@type': 'Person', name: p.name, alternateName: p.nativeName,
   url: p.website, image: new URL(p.photo, p.website).href, jobTitle: p.position,
@@ -91,10 +114,14 @@ const html = `<!doctype html>
         <h2 id="research-heading">Research Interests</h2>
         <ul class="research-list">${p.research.map(item => `<li class="research-item"><strong>${esc(item.title)}.</strong> ${esc(item.description)}</li>`).join('\n        ')}</ul>
       </section>
-      <section class="section" id="publications" aria-labelledby="publications-heading">
+      <section class="section" id="publications" aria-labelledby="publications-heading" data-collapse-threshold="12" data-initial-count="8">
         <div class="section-title-row"><h2 id="publications-heading">Publications</h2>${link('Google Scholar ↗', p.links.scholar, 'text-link')}</div>
-        <div class="publication-list">${p.publications.map(item => publication(item)).join('\n        ')}</div>
-        ${(p.preprints || []).length ? `<div class="preprints"><h3 class="subheading">Preprints</h3>${p.preprints.map(item => publication(item, 4)).join('\n        ')}</div>` : ''}
+        <div class="publication-controls" id="publication-controls" hidden>
+          <div class="publication-filters" role="group" aria-label="Filter publications by research area">${filters}</div>
+          <p class="publication-result-count" id="publication-result-count" role="status" aria-live="polite" aria-atomic="true">${publications.length} publications · Newest first</p>
+        </div>
+        <div class="publication-list" id="publication-list">${publications.map(publication).join('\n        ')}</div>
+        <button type="button" class="publication-show-all" id="publication-show-all" aria-controls="publication-list" hidden>Show all publications</button>
       </section>
       <section class="section" id="software" aria-labelledby="software-heading">
         <h2 id="software-heading">Research Software</h2>
@@ -125,4 +152,4 @@ const html = `<!doctype html>
 writeFileSync(new URL('index.html', root), html.replace(/^[\t ]+$/gm, ''));
 writeFileSync(new URL('robots.txt', root), `User-agent: *\n${p.draft ? 'Disallow: /' : 'Allow: /'}\nSitemap: ${p.website}sitemap.xml\n`);
 writeFileSync(new URL('sitemap.xml', root), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${esc(p.website)}</loc></url></urlset>\n`);
-console.log(`Generated homepage for ${p.name}: ${p.publications.length} publications, ${(p.preprints || []).length} preprints.`);
+console.log(`Generated homepage for ${p.name}: ${publications.length} papers across ${topics.length} research areas.`);

@@ -1,5 +1,6 @@
 // Public profile data. After editing, run: node build.mjs
-// index.html is generated so the full profile also works without JavaScript.
+// All papers share one list. Use status: "Preprint" for unpublished manuscripts.
+// Topics drive the filters; tags are short descriptive keywords.
 window.ACADEMIC_PROFILE = {
   "draft": false,
   "name": "Changjian Zhou",
@@ -55,6 +56,14 @@ window.ACADEMIC_PROFILE = {
   },
   "publications": [
     {
+      "id": "physguard",
+      "topics": [
+        "physical-ai"
+      ],
+      "tags": [
+        "Sim-to-Real",
+        "Neural PDEs"
+      ],
       "title": "PhysGuard: Fisher-Guided Gradient Projection for Sim-to-Real Neural PDE Surrogates",
       "authors": "Changjian Zhou, Junfeng Fang, Negin Yousefpour, Peng Wu, Bin Yan, Guillermo A. Narsilio",
       "venue": "NeurIPS 2026",
@@ -68,6 +77,14 @@ window.ACADEMIC_PROFILE = {
       }
     },
     {
+      "id": "guided-waves",
+      "topics": [
+        "engineering"
+      ],
+      "tags": [
+        "Wave Propagation",
+        "Poromechanics"
+      ],
       "title": "A weak-form-based 1D numerical model for guided wave dispersion in subsea buried pipes embedded in saturated poroelastic soil",
       "authors": "Anchen Ni, Wenbin Wei, Tao Zhuge, Changjian Zhou, Facheng Wang",
       "venue": "Ocean Engineering, 363, 126622",
@@ -77,6 +94,14 @@ window.ACADEMIC_PROFILE = {
       }
     },
     {
+      "id": "anchor-uncertainty",
+      "topics": [
+        "engineering"
+      ],
+      "tags": [
+        "Uncertainty Quantification",
+        "Surrogate Models"
+      ],
       "title": "Stochastic Polynomial Surrogate Models for Uncertainty Quantification of Offshore Plate Anchor Capacity",
       "authors": "Negin Yousefpour, Bo Wang, Changjian Zhou, Alessio Mentani",
       "venue": "Geotechnical and Geological Engineering, 44, 305",
@@ -86,6 +111,70 @@ window.ACADEMIC_PROFILE = {
       }
     },
     {
+      "id": "trace",
+      "topics": [
+        "physical-ai"
+      ],
+      "tags": [
+        "Learned Simulation",
+        "Granular Dynamics"
+      ],
+      "title": "TRACE: A spatiotemporal contact memory graph network simulator for granular dynamics",
+      "authors": "Changjian Zhou, Negin Yousefpour, Jie Qi, Junfeng Fang, Guillermo A. Narsilio, Hans Petter Jostad",
+      "venue": "arXiv:2609.02991",
+      "status": "Preprint",
+      "year": "2026",
+      "links": {
+        "paper": "https://arxiv.org/abs/2609.02991",
+        "code": "https://github.com/Data-Driven-Computational-Geotechnics/TRACE"
+      }
+    },
+    {
+      "id": "structureclaw",
+      "topics": [
+        "engineering"
+      ],
+      "tags": [
+        "LLM Agents",
+        "Structural Engineering"
+      ],
+      "title": "StructureClaw: Traceable LLM Agents and an Executable Benchmark for Structural Engineering Workflows",
+      "authors": "Sizhong Qin, Yi Gu, Yao Jiang, Ao Cai, Changjian Zhou, Shaoxuan Shuai, Jiachang Wang, Tianhao Shen, Yueqiang Li, Xinhao Li, Li Zeng, Yueshi Chen, Dachen Gao, Genrong Xu, Wenjie Liao, Xinzheng Lu",
+      "venue": "arXiv:2607.14896",
+      "status": "Preprint",
+      "year": "2026",
+      "links": {
+        "paper": "https://arxiv.org/abs/2607.14896",
+        "code": "https://github.com/structureclaw/structureclaw"
+      }
+    },
+    {
+      "id": "shanghai-model",
+      "topics": [
+        "engineering"
+      ],
+      "tags": [
+        "Constitutive Modelling",
+        "Deep Excavation"
+      ],
+      "title": "Parameters sensitivity and identification in the Shanghai Model: A numerical analysis for deep excavation",
+      "authors": "Changjian Zhou, Bin Yan, Weidong Wang, Zhonghua Xu, Wenxuan Zhu, Guanlin Ye",
+      "venue": "SSRN 5179194",
+      "status": "Preprint",
+      "year": "2025",
+      "links": {
+        "paper": "https://ssrn.com/abstract=5179194"
+      }
+    },
+    {
+      "id": "constitutive-identification",
+      "topics": [
+        "engineering"
+      ],
+      "tags": [
+        "Parameter Identification",
+        "Machine Learning"
+      ],
       "title": "A combined machine learning/search algorithm-based method for the identification of constitutive parameters from laboratory tests and in-situ tests",
       "authors": "Changjian Zhou, Bin Gao, Bin Yan, Wenxuan Zhu, Guanlin Ye",
       "venue": "Computers and Geotechnics, 170, 106268",
@@ -179,38 +268,14 @@ window.ACADEMIC_PROFILE = {
     }
   ],
   "contactIntro": "I welcome conversations about scientific machine learning, computational mechanics, and research software. The best way to reach me is by email.",
-  "preprints": [
+  "publicationTopics": [
     {
-      "title": "TRACE: A spatiotemporal contact memory graph network simulator for granular dynamics",
-      "authors": "Changjian Zhou, Negin Yousefpour, Jie Qi, Junfeng Fang, Guillermo A. Narsilio, Hans Petter Jostad",
-      "venue": "arXiv:2609.02991",
-      "status": "Preprint",
-      "year": "2026",
-      "links": {
-        "paper": "https://arxiv.org/abs/2609.02991",
-        "code": "https://github.com/Data-Driven-Computational-Geotechnics/TRACE"
-      }
+      "id": "physical-ai",
+      "label": "Physical AI"
     },
     {
-      "title": "StructureClaw: Traceable LLM Agents and an Executable Benchmark for Structural Engineering Workflows",
-      "authors": "Sizhong Qin, Yi Gu, Yao Jiang, Ao Cai, Changjian Zhou, Shaoxuan Shuai, Jiachang Wang, Tianhao Shen, Yueqiang Li, Xinhao Li, Li Zeng, Yueshi Chen, Dachen Gao, Genrong Xu, Wenjie Liao, Xinzheng Lu",
-      "venue": "arXiv:2607.14896",
-      "status": "Preprint",
-      "year": "2026",
-      "links": {
-        "paper": "https://arxiv.org/abs/2607.14896",
-        "code": "https://github.com/structureclaw/structureclaw"
-      }
-    },
-    {
-      "title": "Parameters sensitivity and identification in the Shanghai Model: A numerical analysis for deep excavation",
-      "authors": "Changjian Zhou, Bin Yan, Weidong Wang, Zhonghua Xu, Wenxuan Zhu, Guanlin Ye",
-      "venue": "SSRN 5179194",
-      "status": "Preprint",
-      "year": "2025",
-      "links": {
-        "paper": "https://ssrn.com/abstract=5179194"
-      }
+      "id": "engineering",
+      "label": "Engineering & Mechanics"
     }
   ]
 };
