@@ -13,7 +13,7 @@ The user has specified the new page order and authorized these edits in the curr
 
 ## Portrait and media
 
-Use the user-provided headshot.jpg directly. Following the user's preview feedback, retain the complete 4:3 rectangular photograph with softly rounded corners; do not enlarge or crop the face. Cache-version local assets. Paper images use descriptive alternative text. Videos use native controls, no autoplay, preload none, optional poster and captions. Phone layouts place the preview above the paper body without horizontal scrolling.
+Use the user-provided headshot.jpg directly. Following the user's latest preview feedback, use a generous circular frame while keeping the source photograph's full vertical field of view, including more of the person and surroundings. Do not apply the earlier face-enlarging scale transform. The circle naturally masks the corners. Cache-version local assets. Paper images use descriptive alternative text. Videos use native controls, no autoplay, preload none, optional poster and captions. Phone layouts place the preview above the paper body without horizontal scrolling.
 
 The user directly confirmed that both iFLYTEK and Tsinghua were full-time employment; these labels supersede LinkedIn's employment labels. The user also requested removal of Industrial Securities from the homepage.
 

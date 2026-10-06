@@ -20,7 +20,7 @@
 
 experience 中每一条记录的 type 填写 Education、Research 或 Industry，显示为轻量气泡；employment 可选，例如 Full-time。日期使用 years 字段，描述使用 role 和 detail。公开职业资料的来源记录在 docs/profile-sources.md。
 
-头像使用 assets/headshot.jpg（用户提供的原图），保留 4:3 矩形画幅，展示完整照片，不放大裁切。以后替换文件并重新构建即可。
+头像使用 assets/headshot.jpg（用户提供的原图），以较大的圆形显示，保留原图的完整垂直取景，不额外放大人脸；圆形边缘会遮住画面四角。以后替换文件并重新构建即可。
 
 ## 论文分类与标签
 
