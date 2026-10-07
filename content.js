@@ -139,9 +139,12 @@ window.ACADEMIC_PROFILE = {
     {
       "id": "trace",
       "media": {
-        "type": "image",
-        "src": "./assets/publications/trace-memory.png",
-        "alt": "TRACE contact-edge memory matrix, identity dictionary, and memory retrieval across time steps"
+        "type": "video",
+        "src": "./assets/publications/trace-demo.mp4",
+        "poster": "./assets/publications/trace-demo-poster.jpg",
+        "alt": "TRACE-3D simulation comparing quadruped locomotion on sand and rigid slopes",
+        "caption": "TRACE-3D: locomotion on sand and rigid slopes.",
+        "hasSpokenAudio": false
       },
       "topics": [
         "physical-ai"
@@ -157,7 +160,8 @@ window.ACADEMIC_PROFILE = {
       "year": "2026",
       "links": {
         "paper": "https://arxiv.org/abs/2609.02991",
-        "code": "https://github.com/Data-Driven-Computational-Geotechnics/TRACE"
+        "code": "https://github.com/Data-Driven-Computational-Geotechnics/TRACE",
+        "video": "./assets/publications/trace-demo.mp4"
       },
       "authorship": {
         "firstAuthors": [

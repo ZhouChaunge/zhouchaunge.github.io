@@ -43,7 +43,7 @@ const aboutText = text => {
   const names = [...people.keys()].map(name => name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
   return text.split(new RegExp(`(${names.join('|')})`, 'g')).map(part => people.has(part) ? link(part, people.get(part)) : esc(part)).join('');
 };
-const linkLabels = { paper: 'Paper', code: 'Code', conference: 'Conference', review: 'OpenReview', simulations: 'Abaqus tools', project: 'Project', data: 'Data' };
+const linkLabels = { paper: 'Paper', code: 'Code', video: 'Watch video', conference: 'Conference', review: 'OpenReview', simulations: 'Abaqus tools', project: 'Project', data: 'Data' };
 const publication = item => `<article class="publication" id="pub-${esc(item.id)}" data-topics="${esc(item.topics.join(' '))}" aria-labelledby="pub-title-${esc(item.id)}">
   <div class="publication-preview"><span class="publication-year">${esc(item.year)}</span>${renderPublicationMedia(item, { assetUrl, href, esc })}</div>
   <div class="publication-body">

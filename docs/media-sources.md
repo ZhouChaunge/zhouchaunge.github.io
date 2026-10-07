@@ -12,6 +12,12 @@ The PhysGuard figures are covered by the repository's MIT license; its full copy
 
 ## Add or replace media
 
+### TRACE video
+
+On 7 October 2026, the author supplied `x_trace_k500_mu0.4_a25a30_story.mp4` for the homepage. `assets/publications/trace-demo.mp4` is a web-optimized copy: 34.96 seconds, 1920 × 1080, 25 fps, H.264/yuv420p, with fast-start metadata. It preserves all 874 frames and the full timeline, reducing the file from 43,471,436 to 15,088,430 bytes. The source has no audio stream. `assets/publications/trace-demo-poster.jpg` is a 1280 × 720 frame extracted at 26 seconds, showing sand and rigid 30-degree slopes side by side. The video demonstrates TRACE-3D quadruped locomotion on sand and rigid slopes; no scene or result was generated or modified. The original source file remains unchanged.
+
+### Media configuration
+
 Put media in `assets/publications/`, then set a publication's `media` property in `content.js`:
 
 ```js
