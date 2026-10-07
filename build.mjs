@@ -43,15 +43,15 @@ const aboutText = text => {
   const names = [...people.keys()].map(name => name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
   return text.split(new RegExp(`(${names.join('|')})`, 'g')).map(part => people.has(part) ? link(part, people.get(part)) : esc(part)).join('');
 };
-const linkLabels = { paper: 'Paper', code: 'Code', video: 'Watch video', conference: 'Conference', review: 'OpenReview', simulations: 'Abaqus tools', project: 'Project', data: 'Data' };
+const linkLabels = { paper: 'Paper', code: 'Code' };
 const publication = item => `<article class="publication" id="pub-${esc(item.id)}" data-topics="${esc(item.topics.join(' '))}" aria-labelledby="pub-title-${esc(item.id)}">
-  <div class="publication-preview"><span class="publication-year">${esc(item.year)}</span>${renderPublicationMedia(item, { assetUrl, href, esc })}</div>
+  <span class="publication-year">${esc(item.year)}</span>
+  <div class="publication-preview">${renderPublicationMedia(item, { assetUrl, href, esc })}</div>
   <div class="publication-body">
     <h3 id="pub-title-${esc(item.id)}">${esc(item.title)}</h3>
     <p class="publication-authors">${authors(item.authors)}</p>
     <p class="publication-venue">${esc(item.venue)}${item.status ? ` <span class="publication-status${item.status === 'Preprint' ? ' is-preprint' : ''}">${esc(item.status)}</span>` : ''}</p>
-    <ul class="publication-tags" aria-label="Paper topics">${item.tags.map(tag => `<li>${esc(tag)}</li>`).join(' ')}</ul>
-    <div class="publication-links">${Object.entries(item.links || {}).map(([key, url]) => link(linkLabels[key] || key, url)).join(' ')}</div>
+    <div class="publication-links">${Object.entries(linkLabels).filter(([key]) => item.links?.[key]).map(([key, label]) => link(label, item.links[key])).join(' ')}</div>
   </div>
 </article>`;
 const sections = [['about', 'About Me'], ['background', 'Education & Work'], ['research', 'Research'], ['publications', 'Publications'], ['honors', 'Honors'], ['collaborations', 'Collaborations']];
