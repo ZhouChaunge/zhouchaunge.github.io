@@ -143,7 +143,6 @@ window.ACADEMIC_PROFILE = {
         "src": "./assets/publications/trace-demo.mp4",
         "poster": "./assets/publications/trace-demo-poster.jpg",
         "alt": "TRACE-3D simulation comparing quadruped locomotion on sand and rigid slopes",
-        "caption": "TRACE-3D: locomotion on sand and rigid slopes.",
         "hasSpokenAudio": false
       },
       "topics": [
